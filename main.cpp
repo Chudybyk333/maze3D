@@ -22,7 +22,7 @@ GLfloat vertices[] = {
 };
 
 GLuint indices[] = {
-	// Tylna œcianas
+	// Tylna œcianasfdsf
 	0, 1, 2,  2, 3, 0,
 	// Przednia œciana
 	4, 5, 6,  6, 7, 4,
