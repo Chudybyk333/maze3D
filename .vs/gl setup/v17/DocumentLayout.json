@@ -1,9 +1,9 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\reposytoria\\maze3D\\",
+  "WorkspaceRootPath": "C:\\Users\\Szymon\\Desktop\\GrafikaKomputerowa\\maze3D\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{99A3585E-B51A-4648-B040-DBE45D4403BE}|gl setup.vcxproj|C:\\reposytoria\\maze3D\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{99A3585E-B51A-4648-B040-DBE45D4403BE}|gl setup.vcxproj|C:\\Users\\Szymon\\Desktop\\GrafikaKomputerowa\\maze3D\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{99A3585E-B51A-4648-B040-DBE45D4403BE}|gl setup.vcxproj|solutionrelative:main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
@@ -14,17 +14,29 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "main.cpp",
-              "DocumentMoniker": "C:\\reposytoria\\maze3D\\main.cpp",
+              "DocumentMoniker": "C:\\Users\\Szymon\\Desktop\\GrafikaKomputerowa\\maze3D\\main.cpp",
               "RelativeDocumentMoniker": "main.cpp",
-              "ToolTip": "C:\\reposytoria\\maze3D\\main.cpp",
+              "ToolTip": "C:\\Users\\Szymon\\Desktop\\GrafikaKomputerowa\\maze3D\\main.cpp",
               "RelativeToolTip": "main.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-05-14T15:29:13.767Z",
               "EditorCaption": ""
