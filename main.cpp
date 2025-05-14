@@ -21,7 +21,7 @@ GLfloat vertices[] = {
 };
 
 GLuint indices[] = {
-	// Tylna œciana
+	// Tylna œciana chuj w dupe ped³¹om
 	0, 1, 2,  2, 3, 0,
 	// Przednia œciana
 	4, 5, 6,  6, 7, 4,
