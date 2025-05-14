@@ -1,7 +1,7 @@
-C:\Users\kogut\Desktop\vs\grafika komputerowa\lab6\glad.c;C:\Users\kogut\Desktop\vs\grafika komputerowa\lab6\gl setup\x64\Debug\glad.obj
-C:\Users\kogut\Desktop\vs\grafika komputerowa\lab6\main.cpp;C:\Users\kogut\Desktop\vs\grafika komputerowa\lab6\gl setup\x64\Debug\main.obj
-C:\Users\kogut\Desktop\vs\grafika komputerowa\lab6\EBO.cpp;C:\Users\kogut\Desktop\vs\grafika komputerowa\lab6\gl setup\x64\Debug\EBO.obj
-C:\Users\kogut\Desktop\vs\grafika komputerowa\lab6\shaderClass.cpp;C:\Users\kogut\Desktop\vs\grafika komputerowa\lab6\gl setup\x64\Debug\shaderClass.obj
-C:\Users\kogut\Desktop\vs\grafika komputerowa\lab6\VAO.cpp;C:\Users\kogut\Desktop\vs\grafika komputerowa\lab6\gl setup\x64\Debug\VAO.obj
-C:\Users\kogut\Desktop\vs\grafika komputerowa\lab6\VBO.cpp;C:\Users\kogut\Desktop\vs\grafika komputerowa\lab6\gl setup\x64\Debug\VBO.obj
-C:\Users\kogut\Desktop\vs\grafika komputerowa\lab6\Camera.cpp;C:\Users\kogut\Desktop\vs\grafika komputerowa\lab6\gl setup\x64\Debug\Camera.obj
+C:\reposytoria\maze3D\glad.c;C:\reposytoria\maze3D\gl setup\x64\Debug\glad.obj
+C:\reposytoria\maze3D\main.cpp;C:\reposytoria\maze3D\gl setup\x64\Debug\main.obj
+C:\reposytoria\maze3D\EBO.cpp;C:\reposytoria\maze3D\gl setup\x64\Debug\EBO.obj
+C:\reposytoria\maze3D\shaderClass.cpp;C:\reposytoria\maze3D\gl setup\x64\Debug\shaderClass.obj
+C:\reposytoria\maze3D\VAO.cpp;C:\reposytoria\maze3D\gl setup\x64\Debug\VAO.obj
+C:\reposytoria\maze3D\VBO.cpp;C:\reposytoria\maze3D\gl setup\x64\Debug\VBO.obj
+C:\reposytoria\maze3D\Camera.cpp;C:\reposytoria\maze3D\gl setup\x64\Debug\Camera.obj
