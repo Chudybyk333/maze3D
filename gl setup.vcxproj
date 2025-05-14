@@ -77,8 +77,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ReferencePath>$(ReferencePath)</ReferencePath>
-    <LibraryPath>C:\Users\kogut\Desktop\vs\grafika komputerowa\gl setup\libraries\lib;$(LibraryPath)</LibraryPath>
-    <IncludePath>C:\Users\kogut\Desktop\vs\grafika komputerowa\gl setup\libraries\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\libraries\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\libraries\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
