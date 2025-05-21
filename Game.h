@@ -8,4 +8,6 @@ public:
     void Render();
     void Cleanup();
     bool ShouldClose();
+private:
+    float deltaTime = 0.016f;
 };

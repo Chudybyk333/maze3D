@@ -21,8 +21,11 @@ void Maze::SetupRender() {
     for (int z = 0; z < height; ++z) {
         for (int x = 0; x < width; ++x) {
             if (map[z][x] == '#') {
-                // generuj wierzchołki dla sześcianu w (x,z)
                 glm::vec3 pos(x, 0.0f, z);
+                // dodaj kolizję
+                glm::vec3 min(x - 0.5f, 0.0f, z - 0.5f);
+                glm::vec3 max(x + 0.5f, 2.0f, z + 0.5f);
+                colliders.push_back({ min, max });
 
                 float cube[] = {
                     // pozycje         // normalne
@@ -110,4 +113,8 @@ void Maze::Render(Shader& shader) {
     shader.setMat4("model", glm::mat4(1.0f));
     glDrawArrays(GL_TRIANGLES, 0, vertexCount);
     glBindVertexArray(0);
+}
+
+const std::vector<AABB>& Maze::GetColliders() const {
+    return colliders;
 }

@@ -146,6 +146,8 @@
     <ClCompile Include="Maze.cpp" />
     <ClCompile Include="shaderClass.cpp" />
     <ClCompile Include="stb_image.cpp" />
+    <ClCompile Include="texture.cpp" />
+    <ClCompile Include="UI.cpp" />
     <ClCompile Include="VAO.cpp" />
     <ClCompile Include="VBO.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -155,6 +157,8 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Maze.h" />
+    <ClInclude Include="texture.h" />
+    <ClInclude Include="UI.h" />
     <ClInclude Include="VBO.h" />
     <ClInclude Include="VAO.h" />
     <ClInclude Include="shaderClass.h" />
@@ -162,6 +166,8 @@
   <ItemGroup>
     <None Include="shader.frag" />
     <None Include="shader.vert" />
+    <None Include="ui.frag" />
+    <None Include="ui.vert" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="maze.txt" />

@@ -1,10 +1,36 @@
 ﻿#include "camera.h"
-Camera::Camera() : Front(0.0f, 0.0f, -1.0f), Speed(2.5f), Sensitivity(0.1f), Fov(45.0f), firstMouse(true), lastX(400), lastY(300) {
+
+Camera::Camera() : Front(0.0f, 0.0f, -1.0f), Speed(1.0f), Sensitivity(0.1f), Fov(45.0f), firstMouse(true), lastX(400), lastY(300) {
     Position = glm::vec3(12.0f, groundHeight, 12.0f); // ok. „wzrost gracza”
+    prevPosition = Position;
     Up = glm::vec3(0.0f, 1.0f, 0.0f);
     Yaw = -90.0f;
     Pitch = 0.0f;
 }
+
+bool Camera::IsMoving() const {
+    glm::vec3 diff = Position - prevPosition;
+    diff.y = 0.0f; // pomijamy ruch w pionie
+    return glm::length(diff) > 0.001f; // próg detekcji ruchu
+}
+
+void Camera::UpdatePrevPosition() {
+    prevPosition = Position;
+}
+
+
+bool Camera::CheckCollision(const glm::vec3& newPos, float radius) const {
+    if (!maze) return false;  // brak labiryntu = brak kolizji
+
+    for (const auto& box : maze->GetColliders()) {
+        glm::vec3 clamped = glm::clamp(newPos, box.min, box.max);
+        float dist = glm::distance(newPos, clamped);
+        if (dist < radius)
+            return true;
+    }
+    return false;
+}
+
 void Camera::Update() {
     glm::vec3 front;
     front.x = cos(glm::radians(Yaw)) * cos(glm::radians(Pitch));
@@ -26,8 +52,20 @@ void Camera::ProcessKeyboard(GLFWwindow* window) {
         moveDir += glm::normalize(glm::cross(Front, Up));
     if (glm::length(moveDir) > 0.0f) {
         moveDir.y = 0.0f;
-        Position += glm::normalize(moveDir) * velocity;
+        moveDir = glm::normalize(moveDir) * velocity;
+        // Osobno oś X
+        glm::vec3 proposedX = Position + glm::vec3(moveDir.x, 0.0f, 0.0f);
+        if (!CheckCollision(proposedX, hitboxRadius)) {
+            Position.x = proposedX.x;
+        }
+
+        // Osobno oś Z
+        glm::vec3 proposedZ = Position + glm::vec3(0.0f, 0.0f, moveDir.z);
+        if (!CheckCollision(proposedZ, hitboxRadius)) {
+            Position.z = proposedZ.z;
+        }
     }
+
     if (flyMode) {
         if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
             Position.y += velocity;
@@ -51,9 +89,14 @@ void Camera::ProcessKeyboard(GLFWwindow* window) {
 
 void Camera::UpdatePhysics(float deltaTime) {
     if (!flyMode) {
-        verticalVelocity += gravity * deltaTime;
-        Position.y += verticalVelocity * deltaTime;
+        verticalVelocity += gravity * deltaTime * 0.5f;
+        Position.y += verticalVelocity * deltaTime * 0.5f;
 
+        if (CheckCollision(Position, hitboxRadius)) {
+            Position.y -= verticalVelocity * deltaTime;
+            verticalVelocity = 0.0f;
+            isGrounded = true;
+        }
         if (Position.y <= groundHeight) {
             Position.y = groundHeight;
             verticalVelocity = 0.0f;

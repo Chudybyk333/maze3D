@@ -2,15 +2,19 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include "game.h"
+#include "texture.h"
 #include "maze.h"
 #include "camera.h"
 #include "shaderClass.h"
+#include "ui.h"
 #include <iostream>
 
 GLFWwindow* window;
 Camera camera;
 Maze maze;
 Shader* shader;
+UI ui;
+Shader* uiShader;
 
 void framebuffer_size_callback(GLFWwindow*, int, int);
 void mouse_callback(GLFWwindow*, double, double);
@@ -52,11 +56,24 @@ void Game::Init() {
     // Ładowanie funkcji OpenGL za pomocą GLAD
     gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     // Inicjalizacja shaderów i maze
     shader = new Shader("shader.vert", "shader.frag");
     maze.LoadFromFile("maze.txt");
     maze.SetupRender();
+    camera.SetMaze(&maze);
+
+    // Inicjalizacja shaderów UI
+    uiShader = new Shader("ui.vert", "ui.frag");
+    ui.Init(uiShader);
+
+    // Wczytanie tekstur
+    unsigned int handTex = LoadTexture("hand.png"); // zakładamy że masz tę funkcję
+
+    ui.SetHandTexture(handTex);
+
 }
 
 bool Game::ShouldClose() {
@@ -69,7 +86,10 @@ void Game::ProcessInput() {
 
 void Game::Update() {
     camera.Update();
-    camera.UpdatePhysics(0.016f);
+    camera.UpdatePhysics(deltaTime);
+    ui.Update(deltaTime, camera.IsMoving(), !camera.IsJumping());
+    ui.Render();
+    camera.UpdatePrevPosition();
 }
 
 void Game::Render() {
@@ -81,13 +101,15 @@ void Game::Render() {
     shader->setMat4("projection", camera.GetProjectionMatrix());
 
     maze.Render(*shader);
-
+    ui.Render();
     glfwSwapBuffers(window);
     glfwPollEvents();
 }
 
 void Game::Cleanup() {
     glfwTerminate();
+    delete shader;
+    delete uiShader;
 }
 
 // --- Callbacki i input ---

@@ -36,3 +36,11 @@ void Shader::use() {
 void Shader::setMat4(const std::string& name, const glm::mat4& mat) {
     glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, glm::value_ptr(mat));
 }
+
+void Shader::setVec4(const std::string& name, const glm::vec4& value) {
+    glUniform4fv(glGetUniformLocation(ID, name.c_str()), 1, &value[0]);
+}
+
+void Shader::setBool(const std::string& name, bool value) {
+    glUniform1i(glGetUniformLocation(ID, name.c_str()), (int)value);
+}
