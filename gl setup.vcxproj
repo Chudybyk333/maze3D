@@ -175,13 +175,13 @@
     <Text Include="maze.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="back.jpg" />
-    <Image Include="bottom.jpg" />
-    <Image Include="front.jpg" />
+    <Image Include="dol.png" />
+    <Image Include="gora.png" />
     <Image Include="hand.png" />
-    <Image Include="left.jpg" />
-    <Image Include="right.jpg" />
-    <Image Include="top.jpg" />
+    <Image Include="lewo.png" />
+    <Image Include="prawo.png" />
+    <Image Include="przod.png" />
+    <Image Include="tyl.png" />
     <Image Include="wall_texture.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

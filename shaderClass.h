@@ -10,5 +10,5 @@ public:
     void setVec4(const std::string& name, const glm::vec4& value);
     void setBool(const std::string& name, bool value);
     void setInt(const std::string& name, int value);
-
+    bool isCompiled() const; // Add this method
 };

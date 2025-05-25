@@ -125,22 +125,22 @@
     <Image Include="hand.png">
       <Filter>Pliki zasobów\Tekstury</Filter>
     </Image>
-    <Image Include="back.jpg">
+    <Image Include="dol.png">
       <Filter>Pliki zasobów\Tekstury\skybox</Filter>
     </Image>
-    <Image Include="bottom.jpg">
+    <Image Include="lewo.png">
       <Filter>Pliki zasobów\Tekstury\skybox</Filter>
     </Image>
-    <Image Include="front.jpg">
+    <Image Include="prawo.png">
       <Filter>Pliki zasobów\Tekstury\skybox</Filter>
     </Image>
-    <Image Include="left.jpg">
+    <Image Include="przod.png">
       <Filter>Pliki zasobów\Tekstury\skybox</Filter>
     </Image>
-    <Image Include="top.jpg">
+    <Image Include="tyl.png">
       <Filter>Pliki zasobów\Tekstury\skybox</Filter>
     </Image>
-    <Image Include="right.jpg">
+    <Image Include="gora.png">
       <Filter>Pliki zasobów\Tekstury\skybox</Filter>
     </Image>
   </ItemGroup>
