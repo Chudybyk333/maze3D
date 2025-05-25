@@ -18,6 +18,7 @@ public:
     const std::vector<AABB>& GetColliders() const;
 private:
     std::vector<std::string> map;
+    unsigned int textureID;
     int width = 0, height = 0;
     unsigned int cubeVAO = 0, cubeVBO = 0;
     int vertexCount = 0;

@@ -7,6 +7,7 @@
 #include "camera.h"
 #include "shaderClass.h"
 #include "ui.h"
+#include "stb_image.h"
 #include <iostream>
 
 GLFWwindow* window;
@@ -74,6 +75,8 @@ void Game::Init() {
 
     ui.SetHandTexture(handTex);
 
+
+    stbi_set_flip_vertically_on_load(true); // Tekstury są zwykle ładowane od góry do dołu w OpenGL
 }
 
 bool Game::ShouldClose() {
