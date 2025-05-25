@@ -13,6 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Pliki zasobów\Shadery">
+      <UniqueIdentifier>{3eba6d3d-76b5-41d7-a1ca-2f850dce445e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki zasobów\Inne">
+      <UniqueIdentifier>{b3b2d209-ffd6-4735-b9a1-8366539efda4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki zasobów\Tekstury">
+      <UniqueIdentifier>{96951460-d3b2-4cb1-a11a-97cc5698c4cd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -82,16 +91,30 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="shader.vert" />
-    <None Include="shader.frag" />
+    <None Include="shader.frag">
+      <Filter>Pliki zasobów\Shadery</Filter>
+    </None>
+    <None Include="shader.vert">
+      <Filter>Pliki zasobów\Shadery</Filter>
+    </None>
     <None Include="ui.frag">
-      <Filter>Pliki źródłowe</Filter>
+      <Filter>Pliki zasobów\Shadery</Filter>
     </None>
     <None Include="ui.vert">
-      <Filter>Pliki źródłowe</Filter>
+      <Filter>Pliki zasobów\Shadery</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="maze.txt" />
+    <Text Include="maze.txt">
+      <Filter>Pliki zasobów\Inne</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="wall_texture.png">
+      <Filter>Pliki zasobów\Tekstury</Filter>
+    </Image>
+    <Image Include="hand.png">
+      <Filter>Pliki zasobów\Tekstury</Filter>
+    </Image>
   </ItemGroup>
 </Project>
