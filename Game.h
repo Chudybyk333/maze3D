@@ -1,7 +1,8 @@
 ﻿#pragma once
 
-// Forward declaration of Shader class
+// Forward declarations
 class Shader;
+class Skybox;  // Dodaj forward declaration dla Skybox
 
 class Game {
 public:
@@ -11,10 +12,12 @@ public:
     void Render();
     void Cleanup();
     bool ShouldClose();
+
 private:
     float deltaTime = 0.016f;
-    unsigned int skyboxVAO = 0; // Initialize to 0
-    unsigned int skyboxVBO = 0; // Initialize to 0
-    unsigned int cubemapTexture = 0; // Initialize to 0
-    Shader* skyboxShader = nullptr; // Initialize to nullptr
+
+
+    Skybox* skybox = nullptr;  
+    Shader* shader = nullptr;  
+    Shader* skyboxShader = nullptr;
 };

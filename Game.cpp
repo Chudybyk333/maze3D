@@ -10,6 +10,7 @@
 #include "stb_image.h"
 #include <iostream>
 #include <fstream>
+#include "Skybox.h"
 
 GLFWwindow* window;
 Camera camera;
@@ -79,88 +80,19 @@ void Game::Init() {
 
     stbi_set_flip_vertically_on_load(true); // Tekstury są zwykle ładowane od góry do dołu w OpenGL
 
-    // Skybox
-    float skyboxVertices[] = {
-        // positions          
-        -1.0f,  1.0f, -1.0f,
-        -1.0f, -1.0f, -1.0f,
-         1.0f, -1.0f, -1.0f,
-         1.0f, -1.0f, -1.0f,
-         1.0f,  1.0f, -1.0f,
-        -1.0f,  1.0f, -1.0f,
-
-        -1.0f, -1.0f,  1.0f,
-        -1.0f, -1.0f, -1.0f,
-        -1.0f,  1.0f, -1.0f,
-        -1.0f,  1.0f, -1.0f,
-        -1.0f,  1.0f,  1.0f,
-        -1.0f, -1.0f,  1.0f,
-
-         1.0f, -1.0f, -1.0f,
-         1.0f, -1.0f,  1.0f,
-         1.0f,  1.0f,  1.0f,
-         1.0f,  1.0f,  1.0f,
-         1.0f,  1.0f, -1.0f,
-         1.0f, -1.0f, -1.0f,
-
-        -1.0f, -1.0f,  1.0f,
-        -1.0f,  1.0f,  1.0f,
-         1.0f,  1.0f,  1.0f,
-         1.0f,  1.0f,  1.0f,
-         1.0f, -1.0f,  1.0f,
-        -1.0f, -1.0f,  1.0f,
-
-        -1.0f,  1.0f, -1.0f,
-         1.0f,  1.0f, -1.0f,
-         1.0f,  1.0f,  1.0f,
-         1.0f,  1.0f,  1.0f,
-        -1.0f,  1.0f,  1.0f,
-        -1.0f,  1.0f, -1.0f,
-
-        -1.0f, -1.0f, -1.0f,
-        -1.0f, -1.0f,  1.0f,
-         1.0f, -1.0f, -1.0f,
-         1.0f, -1.0f, -1.0f,
-        -1.0f, -1.0f,  1.0f,
-         1.0f, -1.0f,  1.0f
-    };
-
-    // skybox VAO
-    glGenVertexArrays(1, &skyboxVAO);
-    glGenBuffers(1, &skyboxVBO);
-    glBindVertexArray(skyboxVAO);
-    glBindBuffer(GL_ARRAY_BUFFER, skyboxVBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), skyboxVertices, GL_STATIC_DRAW);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-    glBindVertexArray(0);  // WAŻNE: odłącz VAO
-
-    // load textures
-    std::vector<std::string> faces = {
-        "prawo.png", 
-        "lewo.png", 
-        "gora.png",
-        "dol.png", 
-        "przod.png", 
-        "tyl.png"
-    };
-
-    // Sprawdź czy pliki istnieją
-    for (auto& path : faces) {
-        std::ifstream file(path);
-        if (!file.good()) {
-            std::cerr << "Brak pliku: " << path << std::endl;
-        }
-    }
-
-    cubemapTexture = LoadCubemap(faces);
-    if (cubemapTexture == 0) {
-        std::cerr << "Błąd ładowania skyboxa!" << std::endl;
-    }
-    std::cout << "Skybox zaladowany, ID: " << cubemapTexture << std::endl;
-
-    // create shader
+    // Initialize the skybox shader
     skyboxShader = new Shader("skybox.vert", "skybox.frag");
+
+    // Load the skybox
+    skybox = new Skybox();
+    std::vector<std::string> faces = {
+        "prawo.png", "lewo.png", "dol.png",
+        "gora.png", "przod.png", "tyl.png"
+    };
+
+    if (!skybox->Load(faces)) {
+        std::cerr << "Failed to load skybox!" << std::endl;
+    }
 }
 
 bool Game::ShouldClose() {
@@ -195,26 +127,10 @@ void Game::Render() {
     shader->setMat4("projection", camera.GetProjectionMatrix());
     maze.Render(*shader);
 
-    // 3. Renderowanie skyboxa - ZMIENIONE
-    glDepthFunc(GL_LEQUAL);
-    skyboxShader->use();
-
-    // Usuń translację z macierzy widoku
-    glm::mat4 view = glm::mat4(glm::mat3(camera.GetViewMatrix()));
-    skyboxShader->setMat4("view", view);
-    skyboxShader->setMat4("projection", camera.GetProjectionMatrix());
-
-    // Ustaw teksturę
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
-    skyboxShader->setInt("skybox", 0);  // WAŻNE: Ustawienie uniforma
-
-    // Rysowanie
-    glBindVertexArray(skyboxVAO);
-    glDrawArrays(GL_TRIANGLES, 0, 36);
-    glBindVertexArray(0);
-
-    glDepthFunc(GL_LESS);
+    // 3. Renderowanie skyboxa
+    if (skybox) {
+        skybox->Draw(camera.GetViewMatrix(), camera.GetProjectionMatrix());
+    }
 
     // 4. Renderowanie UI
     ui.Render();
@@ -230,9 +146,8 @@ void Game::Render() {
 }
 
 void Game::Cleanup() {
-    glDeleteVertexArrays(1, &skyboxVAO);
-    glDeleteBuffers(1, &skyboxVBO);
-    glDeleteTextures(1, &cubemapTexture);  // WAŻNE
+    delete skybox;  
+    skybox = nullptr;
     delete shader;
     delete uiShader;
     delete skyboxShader;
