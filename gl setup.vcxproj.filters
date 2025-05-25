@@ -22,6 +22,9 @@
     <Filter Include="Pliki zasobów\Tekstury">
       <UniqueIdentifier>{96951460-d3b2-4cb1-a11a-97cc5698c4cd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Pliki zasobów\Tekstury\skybox">
+      <UniqueIdentifier>{60d88ce9-f91a-43d6-95a8-3d842ff5994a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -103,6 +106,12 @@
     <None Include="ui.vert">
       <Filter>Pliki zasobów\Shadery</Filter>
     </None>
+    <None Include="skybox.vert">
+      <Filter>Pliki zasobów\Shadery</Filter>
+    </None>
+    <None Include="skybox.frag">
+      <Filter>Pliki zasobów\Shadery</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="maze.txt">
@@ -115,6 +124,24 @@
     </Image>
     <Image Include="hand.png">
       <Filter>Pliki zasobów\Tekstury</Filter>
+    </Image>
+    <Image Include="back.jpg">
+      <Filter>Pliki zasobów\Tekstury\skybox</Filter>
+    </Image>
+    <Image Include="bottom.jpg">
+      <Filter>Pliki zasobów\Tekstury\skybox</Filter>
+    </Image>
+    <Image Include="front.jpg">
+      <Filter>Pliki zasobów\Tekstury\skybox</Filter>
+    </Image>
+    <Image Include="left.jpg">
+      <Filter>Pliki zasobów\Tekstury\skybox</Filter>
+    </Image>
+    <Image Include="top.jpg">
+      <Filter>Pliki zasobów\Tekstury\skybox</Filter>
+    </Image>
+    <Image Include="right.jpg">
+      <Filter>Pliki zasobów\Tekstury\skybox</Filter>
     </Image>
   </ItemGroup>
 </Project>
