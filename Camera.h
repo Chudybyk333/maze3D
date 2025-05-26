@@ -19,18 +19,32 @@ public:
     bool IsMoving() const;
     bool IsJumping() const { return isGrounded; }
     void UpdatePrevPosition();
+    float walkSpeed = 1.0f;
+    float sprintSpeed = 2.5f;
+    bool isSprinting = false;
+    void SetFov(float fov) { currentFov = fov; }
+    float GetFov() const { return currentFov; }
+
 private:
     glm::vec3 Position, Front, Up;
     glm::vec3 prevPosition;
-    float Yaw, Pitch, Speed, Sensitivity, Fov;
+    
+    // Widok
+    float Yaw, Pitch, Speed, Sensitivity;
+    float Fov, sprintFov, currentFov, fovChangeSpeed;
+
     bool firstMouse;
     float lastX, lastY;
     float verticalVelocity;
     bool isGrounded = true;
-    const float groundHeight = 0.5f;  // lub inna wartość, np. 1.2f
+
+	// Parametry fizyki
+    const float groundHeight = 0.9f; 
     const float gravity = -9.81f;
     const float jumpForce = 3.5f;
+
     float hitboxRadius = 0.15f;
     bool flyMode = false;
+    float GetCurrentSpeed() const { return isSprinting ? sprintSpeed : walkSpeed; }
     bool CheckCollision(const glm::vec3& newPos, float radius) const;
 };

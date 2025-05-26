@@ -99,7 +99,7 @@ void Game::Init() {
     // Ustawienia oświetlenia
     lightDirection = glm::vec3(-0.2f, -1.0f, -0.3f); // Światło padające z góry i z przodu
     lightColor = glm::vec3(1.0f, 1.0f, 1.0f); // Białe światło
-    ambientStrength = 0.2f;
+    ambientStrength = 0.5f;
 }
 
 bool Game::ShouldClose() {

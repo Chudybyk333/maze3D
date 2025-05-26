@@ -1,12 +1,19 @@
 ﻿#include "camera.h"
 
-Camera::Camera() : Front(0.0f, 0.0f, -1.0f), Speed(1.0f), Sensitivity(0.1f), Fov(45.0f), firstMouse(true), lastX(400), lastY(300) {
+Camera::Camera()
+    : Front(0.0f, 0.0f, -1.0f), Speed(1.0f), Sensitivity(0.1f),
+    firstMouse(true), lastX(400), lastY(300), verticalVelocity(0.0f) { // Initialize verticalVelocity
     Position = glm::vec3(12.0f, groundHeight, 12.0f); // ok. „wzrost gracza”
     prevPosition = Position;
     Up = glm::vec3(0.0f, 1.0f, 0.0f);
     Yaw = -90.0f;
     Pitch = 0.0f;
+	Fov = 60.0f; // standardowy FOV
+    sprintFov = 90.0f;   
+    currentFov = 60.0f;   
+    fovChangeSpeed = 10.0f;
 }
+
 
 bool Camera::IsMoving() const {
     glm::vec3 diff = Position - prevPosition;
@@ -37,11 +44,23 @@ void Camera::Update() {
     front.y = sin(glm::radians(Pitch));
     front.z = sin(glm::radians(Yaw)) * cos(glm::radians(Pitch));
     Front = glm::normalize(front);
+
+    // Większy FOV podczas sprintu z efektem "przyśpieszenia"
+    float targetFov = isSprinting ? sprintFov : Fov;
+    if (isSprinting) {
+        targetFov += 5.0f * sin(glfwGetTime() * 2.0f); // Lekkie drgania
+    }
+    currentFov = glm::mix(currentFov, targetFov, fovChangeSpeed * 0.016f);
 }
 void Camera::ProcessKeyboard(GLFWwindow* window) {
-    float velocity = Speed * 0.016f;
+    float velocity = GetCurrentSpeed() * 0.016f; // 0.016f to przybliżony czas jednej klatki (60 FPS)
     glm::vec3 moveDir(0.0f);
     static bool altPressedLastFrame = false;
+
+    // Sprint
+    isSprinting = (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS);
+    
+
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         moveDir += Front;
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
@@ -153,6 +172,7 @@ void Camera::OnMouseMove(GLFWwindow* window, double xpos, double ypos) {
 glm::mat4 Camera::GetViewMatrix() {
     return glm::lookAt(Position, Position + Front, Up);
 }
+
 glm::mat4 Camera::GetProjectionMatrix() {
-    return glm::perspective(glm::radians(Fov), 800.0f / 600.0f, 0.1f, 100.0f);
+    return glm::perspective(glm::radians(currentFov), 800.0f / 600.0f, 0.1f, 100.0f);
 }

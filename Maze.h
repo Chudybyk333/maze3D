@@ -18,9 +18,11 @@ public:
     const std::vector<AABB>& GetColliders() const;
 private:
     std::vector<std::string> map;
-    unsigned int textureID;
+    unsigned int textureID = 0; // Initialize textureID to 0
     int width = 0, height = 0;
     unsigned int cubeVAO = 0, cubeVBO = 0;
     int vertexCount = 0;
     std::vector<AABB> colliders;
 };
+
+
