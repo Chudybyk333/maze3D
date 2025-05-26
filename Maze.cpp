@@ -1,4 +1,5 @@
-﻿#include "maze.h"
+﻿#include <iostream>
+#include "maze.h"
 #include <fstream>
 #include <vector>
 #include <glad/glad.h>
@@ -23,6 +24,11 @@ void Maze::SetupRender() {
 
     // Załaduj teksturę
     textureID = LoadTexture("wall_texture.png");  // Upewnij się, że masz plik wall_texture.png w odpowiednim miejscu
+    if (textureID == 0) {
+        std::cerr << "Failed to load wall texture!" << std::endl;
+        // Możesz tutaj stworzyć awaryjną teksturę
+    }
+
 
     for (int z = 0; z < height; ++z) {
         for (int x = 0; x < width; ++x) {

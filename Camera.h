@@ -13,6 +13,7 @@ public:
     void UpdatePhysics(float deltaTime);
     glm::mat4 GetViewMatrix();
     glm::mat4 GetProjectionMatrix();
+	glm::vec3 GetPosition() const { return Position; }
     const Maze* maze = nullptr;
     void SetMaze(const Maze* m) { maze = m; }
     bool IsMoving() const;

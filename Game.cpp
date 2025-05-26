@@ -1,6 +1,8 @@
 ﻿#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include "glm/gtc/type_ptr.hpp"
 #include "Game.h"
 #include "texture.h"
 #include "maze.h"
@@ -93,6 +95,11 @@ void Game::Init() {
     if (!skybox->Load(faces)) {
         std::cerr << "Failed to load skybox!" << std::endl;
     }
+
+    // Ustawienia oświetlenia
+    lightDirection = glm::vec3(-0.2f, -1.0f, -0.3f); // Światło padające z góry i z przodu
+    lightColor = glm::vec3(1.0f, 1.0f, 1.0f); // Białe światło
+    ambientStrength = 0.2f;
 }
 
 bool Game::ShouldClose() {
@@ -123,6 +130,17 @@ void Game::Render() {
 
     // 2. Renderowanie sceny
     shader->use();
+    // Przekazanie parametrów oświetlenia
+    shader->setVec3("lightDir", lightDirection);
+    shader->setVec3("lightColor", lightColor);
+    shader->setVec3("viewPos", camera.GetPosition());
+    shader->setFloat("ambientStrength", ambientStrength);
+
+    // Dla labiryntu
+    shader->setVec3("objectColor", glm::vec3(0.7f, 0.7f, 0.7f)); // Szary kolor
+    maze.Render(*shader);
+
+	// Przekazanie macierzy widoku i projekcji
     shader->setMat4("view", camera.GetViewMatrix());
     shader->setMat4("projection", camera.GetProjectionMatrix());
     maze.Render(*shader);
