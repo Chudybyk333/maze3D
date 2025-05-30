@@ -19,8 +19,8 @@ public:
     bool IsMoving() const;
     bool IsJumping() const { return isGrounded; }
     void UpdatePrevPosition();
-    float walkSpeed = 1.0f;
-    float sprintSpeed = 2.5f;
+    float walkSpeed = 1.6f;
+    float sprintSpeed = 2.4f;
     bool isSprinting = false;
     void SetFov(float fov) { currentFov = fov; }
     float GetFov() const { return currentFov; }
@@ -40,7 +40,7 @@ private:
 
 	// Parametry fizyki
     const float groundHeight = 0.9f; 
-    const float gravity = -9.81f;
+    const float gravity = -16.0f;
     const float jumpForce = 3.5f;
 
     float hitboxRadius = 0.15f;

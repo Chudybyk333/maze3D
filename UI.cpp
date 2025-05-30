@@ -1,5 +1,5 @@
 #include "ui.h"
-#include "shaderClass.h"
+#include "Shader.h"
 #include <glad/glad.h>
 
 UI::UI() : shader(nullptr), handTexture(0), selectedSlot(0) {}

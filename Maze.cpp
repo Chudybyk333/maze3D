@@ -138,3 +138,4 @@ void Maze::Render(Shader& shader) {
 const std::vector<AABB>& Maze::GetColliders() const {
     return colliders;
 }
+

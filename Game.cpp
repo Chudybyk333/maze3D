@@ -7,12 +7,13 @@
 #include "texture.h"
 #include "maze.h"
 #include "camera.h"
-#include "shaderClass.h"
+#include "Shader.h"
 #include "ui.h"
 #include "stb_image.h"
 #include <iostream>
 #include <fstream>
 #include "Skybox.h"
+#include "Ground.h"
 
 GLFWwindow* window;
 Camera camera;
@@ -57,30 +58,28 @@ void Game::Init() {
     // Ukrycie kursora i wyłączenie jego interakcji
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-
     // Ładowanie funkcji OpenGL za pomocą GLAD
     gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    // Inicjalizacja shaderów i maze
+    // Inicjalizacja shaderów i obiektów
     shader = new Shader("shader.vert", "shader.frag");
     maze.LoadFromFile("maze.txt");
     maze.SetupRender();
     camera.SetMaze(&maze);
+    ground.SetupRender(maze);
 
     // Inicjalizacja shaderów UI
     uiShader = new Shader("ui.vert", "ui.frag");
     ui.Init(uiShader);
 
     // Wczytanie tekstur
-    unsigned int handTex = LoadTexture("hand.png"); // zakładamy że masz tę funkcję
-
+    unsigned int handTex = LoadTexture("hand.png");
     ui.SetHandTexture(handTex);
 
-
-    stbi_set_flip_vertically_on_load(true); // Tekstury są zwykle ładowane od góry do dołu w OpenGL
+    stbi_set_flip_vertically_on_load(true);
 
     // Initialize the skybox shader
     skyboxShader = new Shader("skybox.vert", "skybox.frag");
@@ -97,8 +96,8 @@ void Game::Init() {
     }
 
     // Ustawienia oświetlenia
-    lightDirection = glm::vec3(-0.2f, -1.0f, -0.3f); // Światło padające z góry i z przodu
-    lightColor = glm::vec3(1.0f, 1.0f, 1.0f); // Białe światło
+    lightDirection = glm::vec3(-0.2f, -1.0f, -0.3f);
+    lightColor = glm::vec3(1.0f, 1.0f, 1.0f);
     ambientStrength = 0.5f;
 }
 
@@ -122,13 +121,13 @@ void Game::Render() {
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    // 1. Najpierw sprawdź czy shadery są poprawne
+    // Sprawdź czy shadery są poprawne
     if (!shader->isCompiled() || !skyboxShader->isCompiled()) {
         std::cerr << "Błąd shadera!" << std::endl;
         return;
     }
 
-    // 2. Renderowanie sceny
+    // Renderowanie sceny
     shader->use();
     // Przekazanie parametrów oświetlenia
     shader->setVec3("lightDir", lightDirection);
@@ -136,24 +135,25 @@ void Game::Render() {
     shader->setVec3("viewPos", camera.GetPosition());
     shader->setFloat("ambientStrength", ambientStrength);
 
-    // Dla labiryntu
-    shader->setVec3("objectColor", glm::vec3(0.7f, 0.7f, 0.7f)); // Szary kolor
-    maze.Render(*shader);
-
-	// Przekazanie macierzy widoku i projekcji
+    // Przekazanie macierzy widoku i projekcji
     shader->setMat4("view", camera.GetViewMatrix());
     shader->setMat4("projection", camera.GetProjectionMatrix());
+
+    // Renderowanie podłogi
+    ground.Render(*shader);
+
+    // Renderowanie labiryntu
     maze.Render(*shader);
 
-    // 3. Renderowanie skyboxa
+    // Renderowanie skyboxa
     if (skybox) {
         skybox->Draw(camera.GetViewMatrix(), camera.GetProjectionMatrix());
     }
 
-    // 4. Renderowanie UI
+    // Renderowanie UI
     ui.Render();
 
-    // 5. Sprawdź błędy OpenGL
+    // Sprawdź błędy OpenGL
     GLenum err;
     while ((err = glGetError()) != GL_NO_ERROR) {
         std::cerr << "OpenGL error: " << err << std::endl;
@@ -164,7 +164,7 @@ void Game::Render() {
 }
 
 void Game::Cleanup() {
-    delete skybox;  
+    delete skybox;
     skybox = nullptr;
     delete shader;
     delete uiShader;

@@ -1,12 +1,14 @@
 ﻿#pragma once
-
 #include <glm/glm.hpp> 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
 // Forward declarations
 class Shader;
-class Skybox;  // Dodaj forward declaration dla Skybox
+class Skybox;
+class Ground;
+
+#include "ground.h"
 
 class Game {
 public:
@@ -24,7 +26,10 @@ private:
     glm::vec3 lightColor;
     float ambientStrength;
 
-    Skybox* skybox = nullptr;  
-    Shader* shader = nullptr;  
+    // Obiekty gry
+    Skybox* skybox = nullptr;
+    Shader* shader = nullptr;
     Shader* skyboxShader = nullptr;
+    Shader* uiShader = nullptr;
+    Ground ground;
 };

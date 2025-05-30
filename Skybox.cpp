@@ -1,5 +1,5 @@
 #include "skybox.h"
-#include "shaderClass.h"
+#include "Shader.h"
 #include "texture.h"
 #include <iostream>
 

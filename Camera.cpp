@@ -8,9 +8,9 @@ Camera::Camera()
     Up = glm::vec3(0.0f, 1.0f, 0.0f);
     Yaw = -90.0f;
     Pitch = 0.0f;
-	Fov = 60.0f; // standardowy FOV
+	Fov = 80.0f; // standardowy FOV
     sprintFov = 90.0f;   
-    currentFov = 60.0f;   
+    currentFov = 80.0f;   
     fovChangeSpeed = 10.0f;
 }
 

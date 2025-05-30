@@ -3,7 +3,7 @@
 #include <vector>
 #include <glad/glad.h>
 #include <glm/glm.hpp>
-#include "shaderClass.h"
+#include "Shader.h"
 
 struct AABB {
     glm::vec3 min;
@@ -16,6 +16,9 @@ public:
     void SetupRender();
     void Render(Shader& shader);
     const std::vector<AABB>& GetColliders() const;
+	int GetWidth() const { return width; }
+	int GetHeight() const { return height; }
+	unsigned int GetTextureID() const { return textureID; }
 private:
     std::vector<std::string> map;
     unsigned int textureID = 0; // Initialize textureID to 0
@@ -24,5 +27,3 @@ private:
     int vertexCount = 0;
     std::vector<AABB> colliders;
 };
-
-

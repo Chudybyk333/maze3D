@@ -141,10 +141,11 @@
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="glad.c" />
+    <ClCompile Include="Ground.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="EBO.cpp" />
     <ClCompile Include="Maze.cpp" />
-    <ClCompile Include="shaderClass.cpp" />
+    <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="stb_image.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -157,13 +158,14 @@
     <ClInclude Include="EBO.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Ground.h" />
     <ClInclude Include="Maze.h" />
     <ClInclude Include="Skybox.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="VBO.h" />
     <ClInclude Include="VAO.h" />
-    <ClInclude Include="shaderClass.h" />
+    <ClInclude Include="Shader.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shader.frag" />
@@ -178,6 +180,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="dol.png" />
+    <Image Include="ground_texture.png" />
     <Image Include="gora.png" />
     <Image Include="hand.png" />
     <Image Include="lewo.png" />
