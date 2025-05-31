@@ -9,7 +9,7 @@
 #include "camera.h"
 #include "Shader.h"
 #include "ui.h"
-#include "stb_image.h"
+#include <stb/stb_image.h>
 #include <iostream>
 #include <fstream>
 #include "Skybox.h"
@@ -80,6 +80,14 @@ void Game::Init() {
         key.SetPosition(pos);
         keys.push_back(key);
     }
+    // Inicjalizacja drzwi
+    for (const auto& pos : maze.GetDoorPositions()) {
+        Door door;
+        door.LoadModel();
+        door.SetPosition(pos);
+        doors.push_back(door);
+    }
+
 
     // Inicjalizacja shaderów UI
     uiShader = new Shader("ui.vert", "ui.frag");
@@ -129,6 +137,11 @@ void Game::Update() {
             glm::distance(camera.GetPosition(), key.GetPosition()) < 0.5f) {
             key.Collect();
             // Tutaj możesz dodać efekt zebrania klucza
+             // Otwórz wszystkie drzwi — na razie prosto:
+            for (auto& door : doors) {
+                door.Open();
+                maze.RemoveDoorColliderAt(door.GetPosition());
+            }
         }
     }
 
@@ -186,6 +199,11 @@ void Game::Render() {
     for (auto& key : keys) {
         key.Render(*shader, camera.GetViewMatrix(), camera.GetProjectionMatrix());
     }
+    // Renderowanie drzwi
+    for (auto& door : doors) {
+        door.Render(*shader, camera.GetViewMatrix(), camera.GetProjectionMatrix());
+    }
+
 
     // Renderowanie skyboxa
     if (skybox) {

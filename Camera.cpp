@@ -35,6 +35,12 @@ bool Camera::CheckCollision(const glm::vec3& newPos, float radius) const {
         if (dist < radius)
             return true;
     }
+    for (const auto& box : maze->GetDoorColliders()) {
+        glm::vec3 clamped = glm::clamp(newPos, box.min, box.max);
+        float dist = glm::distance(newPos, clamped);
+        if (dist < radius)
+            return true;
+    }
     return false;
 }
 

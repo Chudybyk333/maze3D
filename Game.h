@@ -5,6 +5,7 @@
 #include <vector>
 #include "Key.h"
 #include "Ground.h"
+#include "Door.h"
 
 // Forward declarations
 class Shader;
@@ -33,4 +34,5 @@ private:
     Shader* uiShader = nullptr;
     Ground ground;
     std::vector<Key> keys;
+    std::vector<Door> doors;
 };
