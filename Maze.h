@@ -16,12 +16,15 @@ public:
     void SetupRender();
     void Render(Shader& shader);
     const std::vector<AABB>& GetColliders() const;
-	int GetWidth() const { return width; }
-	int GetHeight() const { return height; }
-	unsigned int GetTextureID() const { return textureID; }
+    const std::vector<glm::vec3>& GetKeyPositions() const;
+    int GetWidth() const { return width; }
+    int GetHeight() const { return height; }
+    unsigned int GetTextureID() const { return textureID; }
+
 private:
     std::vector<std::string> map;
-    unsigned int textureID = 0; // Initialize textureID to 0
+    std::vector<glm::vec3> keyPositions;
+    unsigned int textureID = 0;
     int width = 0, height = 0;
     unsigned int cubeVAO = 0, cubeVBO = 0;
     int vertexCount = 0;

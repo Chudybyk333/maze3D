@@ -36,9 +36,6 @@
     <ClCompile Include="EBO.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="shaderClass.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
     <ClCompile Include="VAO.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
@@ -66,12 +63,18 @@
     <ClCompile Include="Skybox.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="Ground.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="Key.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EBO.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="shaderClass.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
     <ClInclude Include="VAO.h">
@@ -96,6 +99,15 @@
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
     <ClInclude Include="Skybox.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="Ground.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="Key.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
   </ItemGroup>
@@ -148,6 +160,12 @@
     </Image>
     <Image Include="gora.png">
       <Filter>Pliki zasobów\Tekstury\skybox</Filter>
+    </Image>
+    <Image Include="ground_texture.png">
+      <Filter>Pliki zasobów\Tekstury</Filter>
+    </Image>
+    <Image Include="key_texture.png">
+      <Filter>Pliki zasobów\Tekstury</Filter>
     </Image>
   </ItemGroup>
 </Project>

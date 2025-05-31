@@ -71,6 +71,14 @@ void Game::Init() {
     camera.SetMaze(&maze);
     ground.SetupRender(maze);
 
+    // Inicjalizacja kluczy
+    for (const auto& pos : maze.GetKeyPositions()) {
+        Key key;
+        key.LoadModel();
+        key.SetPosition(pos);
+        keys.push_back(key);
+    }
+
     // Inicjalizacja shaderów UI
     uiShader = new Shader("ui.vert", "ui.frag");
     ui.Init(uiShader);
@@ -112,8 +120,17 @@ void Game::ProcessInput() {
 void Game::Update() {
     camera.Update();
     camera.UpdatePhysics(deltaTime);
+
+    // Sprawdź kolizję z kluczami
+    for (auto& key : keys) {
+        if (!key.IsCollected() &&
+            glm::distance(camera.GetPosition(), key.GetPosition()) < 0.5f) {
+            key.Collect();
+            // Tutaj możesz dodać efekt zebrania klucza
+        }
+    }
+
     ui.Update(deltaTime, camera.IsMoving(), !camera.IsJumping());
-    ui.Render();
     camera.UpdatePrevPosition();
 }
 
@@ -144,6 +161,11 @@ void Game::Render() {
 
     // Renderowanie labiryntu
     maze.Render(*shader);
+
+    // Renderowanie kluczy
+    for (auto& key : keys) {
+        key.Render(*shader, camera.GetViewMatrix(), camera.GetProjectionMatrix());
+    }
 
     // Renderowanie skyboxa
     if (skybox) {

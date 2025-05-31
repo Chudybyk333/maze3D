@@ -142,6 +142,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="Ground.cpp" />
+    <ClCompile Include="Key.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="EBO.cpp" />
     <ClCompile Include="Maze.cpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Ground.h" />
+    <ClInclude Include="Key.h" />
     <ClInclude Include="Maze.h" />
     <ClInclude Include="Skybox.h" />
     <ClInclude Include="Texture.h" />
@@ -183,6 +185,7 @@
     <Image Include="ground_texture.png" />
     <Image Include="gora.png" />
     <Image Include="hand.png" />
+    <Image Include="key_texture.png" />
     <Image Include="lewo.png" />
     <Image Include="prawo.png" />
     <Image Include="przod.png" />

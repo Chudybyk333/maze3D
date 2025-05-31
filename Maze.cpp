@@ -7,16 +7,33 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "stb_image.h"
 #include "texture.h"
+
 #define STB_IMAGE_IMPLEMENTATION
 
 void Maze::LoadFromFile(const std::string& filename) {
     std::ifstream file(filename);
     std::string line;
+    int z = 0;
+
+    keyPositions.clear();
+    map.clear();
+
     while (std::getline(file, line)) {
         map.push_back(line);
+
+        for (int x = 0; x < line.size(); ++x) {
+            if (line[x] == 'K') {
+                keyPositions.emplace_back(x + 0.0f, 0.5f, z + 0.0f);
+            }
+        }
+        z++;
     }
     height = map.size();
     width = map.empty() ? 0 : map[0].length();
+}
+
+const std::vector<glm::vec3>& Maze::GetKeyPositions() const {
+    return keyPositions;
 }
 
 void Maze::SetupRender() {

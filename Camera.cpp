@@ -48,7 +48,7 @@ void Camera::Update() {
     // Większy FOV podczas sprintu z efektem "przyśpieszenia"
     float targetFov = isSprinting ? sprintFov : Fov;
     if (isSprinting) {
-        targetFov += 5.0f * sin(glfwGetTime() * 2.0f); // Lekkie drgania
+        targetFov += 5.0f * sin(glfwGetTime() * 1.0f); // Lekkie drgania
     }
     currentFov = glm::mix(currentFov, targetFov, fovChangeSpeed * 0.016f);
 }
