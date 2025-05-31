@@ -20,6 +20,9 @@ public:
     int GetWidth() const { return width; }
     int GetHeight() const { return height; }
     unsigned int GetTextureID() const { return textureID; }
+    unsigned int GenerateWallTexture();
+    glm::vec3 GetBoundsMin() const { return glm::vec3(0, 0, 0); }
+    glm::vec3 GetBoundsMax() const { return glm::vec3(width, 2.0f, height); }
 
 private:
     std::vector<std::string> map;

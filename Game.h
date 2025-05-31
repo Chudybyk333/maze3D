@@ -25,6 +25,7 @@ private:
     glm::vec3 lightDirection;
     glm::vec3 lightColor;
     float ambientStrength;
+    unsigned int wallTextureID;
 
     Skybox* skybox = nullptr;
     Shader* shader = nullptr;

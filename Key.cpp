@@ -83,16 +83,23 @@ void Key::LoadModel() {
 void Key::Render(Shader& shader, const glm::mat4& view, const glm::mat4& projection) {
     if (collected) return;
 
+    // Przeka¿ parametry œwiat³a klucza do shadera
+    shader.use();
+    shader.setVec3("keyLightPos", position + glm::vec3(0.0f, 0.2f, 0.0f)); // Lekko nad kluczem
+    shader.setVec3("keyLightColor", lightColor);
+    shader.setFloat("keyLightIntensity", lightIntensity);
+
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, textureID);
 
-    shader.use();
     shader.setMat4("view", view);
     shader.setMat4("projection", projection);
 
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::translate(model, position);
+    model = glm::translate(model, glm::vec3(0.0f, 0.1f, 0.0f)); // Delikatne uniesienie
     model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(0.0f, 1.0f, 0.0f));
+    model = glm::scale(model, glm::vec3(0.5f)); // Zmniejszenie rozmiaru
     shader.setMat4("model", model);
 
     glBindVertexArray(VAO);

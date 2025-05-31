@@ -156,3 +156,30 @@ const std::vector<AABB>& Maze::GetColliders() const {
     return colliders;
 }
 
+unsigned int Maze::GenerateWallTexture() {
+    // Stwórz teksturę o rozmiarze labiryntu
+    int texWidth = width;
+    int texHeight = height;
+    std::vector<float> wallData(texWidth * texHeight, 0.0f);
+
+    // Wypełnij teksturę (1.0 = ściana, 0.0 = pusto)
+    for (int z = 0; z < height; ++z) {
+        for (int x = 0; x < width; ++x) {
+            if (map[z][x] == '#') {
+                wallData[z * width + x] = 1.0f; // Ściana
+            }
+        }
+    }
+
+    // Prześlij do OpenGL
+    unsigned int textureID;
+    glGenTextures(1, &textureID);
+    glBindTexture(GL_TEXTURE_2D, textureID);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, texWidth, texHeight, 0, GL_RED, GL_FLOAT, wallData.data());
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+    return textureID;
+}

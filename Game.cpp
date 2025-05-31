@@ -71,6 +71,8 @@ void Game::Init() {
     camera.SetMaze(&maze);
     ground.SetupRender(maze);
 
+    wallTextureID = maze.GenerateWallTexture();
+
     // Inicjalizacja kluczy
     for (const auto& pos : maze.GetKeyPositions()) {
         Key key;
@@ -146,21 +148,39 @@ void Game::Render() {
 
     // Renderowanie sceny
     shader->use();
+
+
+
     // Przekazanie parametrów oświetlenia
     shader->setVec3("lightDir", lightDirection);
     shader->setVec3("lightColor", lightColor);
     shader->setVec3("viewPos", camera.GetPosition());
     shader->setFloat("ambientStrength", ambientStrength);
 
+    // Przekaż rozmiar labiryntu i teksturę ścian
+    shader->setVec3("mazeSize", glm::vec3(maze.GetWidth(), 2.0f, maze.GetHeight()));
+    glActiveTexture(GL_TEXTURE1); // Użyj slotu tekstury 1 (0 jest zajęty przez texture_diffuse1)
+    glBindTexture(GL_TEXTURE_2D, wallTextureID);
+    shader->setInt("wallMap", 1);
+
+    shader->setVec3("mazeBoundsMin", maze.GetBoundsMin());
+    shader->setVec3("mazeBoundsMax", maze.GetBoundsMax());
+
     // Przekazanie macierzy widoku i projekcji
     shader->setMat4("view", camera.GetViewMatrix());
     shader->setMat4("projection", camera.GetProjectionMatrix());
+
+    // Renderowanie światła klucza
+    for (auto& key : keys) {
+        key.Render(*shader, camera.GetViewMatrix(), camera.GetProjectionMatrix());
+    }
 
     // Renderowanie podłogi
     ground.Render(*shader);
 
     // Renderowanie labiryntu
     maze.Render(*shader);
+
 
     // Renderowanie kluczy
     for (auto& key : keys) {
