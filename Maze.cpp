@@ -5,7 +5,7 @@
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include "stb_image.h"
+#include <stb/stb_image.h>
 #include "texture.h"
 
 #define STB_IMAGE_IMPLEMENTATION
@@ -16,6 +16,7 @@ void Maze::LoadFromFile(const std::string& filename) {
     int z = 0;
 
     keyPositions.clear();
+    doorPositions.clear();
     map.clear();
 
     while (std::getline(file, line)) {
@@ -24,6 +25,9 @@ void Maze::LoadFromFile(const std::string& filename) {
         for (int x = 0; x < line.size(); ++x) {
             if (line[x] == 'K') {
                 keyPositions.emplace_back(x + 0.0f, 0.5f, z + 0.0f);
+            }
+            if (line[x] == 'D') {
+                doorPositions.emplace_back(x + 0.0f, 0.5f, z + 0.0f);
             }
         }
         z++;
@@ -34,6 +38,9 @@ void Maze::LoadFromFile(const std::string& filename) {
 
 const std::vector<glm::vec3>& Maze::GetKeyPositions() const {
     return keyPositions;
+}
+const std::vector<glm::vec3>& Maze::GetDoorPositions() const {
+    return doorPositions;
 }
 
 void Maze::SetupRender() {
@@ -49,6 +56,11 @@ void Maze::SetupRender() {
 
     for (int z = 0; z < height; ++z) {
         for (int x = 0; x < width; ++x) {
+            if (map[z][x] == 'D') {
+                glm::vec3 min(x - 0.5f, 0.0f, z - 0.5f);
+                glm::vec3 max(x + 0.5f, 2.0f, z + 0.5f);
+                doorColliders.push_back({ min, max });
+            }
             if (map[z][x] == '#') {
                 glm::vec3 pos(x, 0.0f, z);
                 // dodaj kolizję
@@ -155,6 +167,22 @@ void Maze::Render(Shader& shader) {
 const std::vector<AABB>& Maze::GetColliders() const {
     return colliders;
 }
+
+const std::vector<AABB>& Maze::GetDoorColliders() const {
+    return doorColliders;
+}
+
+void Maze::RemoveDoorColliderAt(const glm::vec3& position) {
+    doorColliders.erase(
+        std::remove_if(doorColliders.begin(), doorColliders.end(),
+            [&](const AABB& aabb) {
+                glm::vec3 center = (aabb.min + aabb.max) * 0.5f;
+                return glm::distance(center, position) < 0.1f;
+            }),
+        doorColliders.end()
+    );
+}
+
 
 unsigned int Maze::GenerateWallTexture() {
     // Stwórz teksturę o rozmiarze labiryntu

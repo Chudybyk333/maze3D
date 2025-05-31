@@ -16,7 +16,11 @@ public:
     void SetupRender();
     void Render(Shader& shader);
     const std::vector<AABB>& GetColliders() const;
+    std::vector<AABB> doorColliders;
+    const std::vector<AABB>& GetDoorColliders() const;
+    void RemoveDoorColliderAt(const glm::vec3& position); // do późniejszego usuwania kolizji po otwarciu
     const std::vector<glm::vec3>& GetKeyPositions() const;
+    const std::vector<glm::vec3>& GetDoorPositions() const;
     int GetWidth() const { return width; }
     int GetHeight() const { return height; }
     unsigned int GetTextureID() const { return textureID; }
@@ -27,6 +31,7 @@ public:
 private:
     std::vector<std::string> map;
     std::vector<glm::vec3> keyPositions;
+    std::vector<glm::vec3> doorPositions;
     unsigned int textureID = 0;
     int width = 0, height = 0;
     unsigned int cubeVAO = 0, cubeVBO = 0;
