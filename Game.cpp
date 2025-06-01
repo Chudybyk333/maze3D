@@ -140,29 +140,32 @@ void Game::Update() {
     camera.Update();
     camera.UpdatePhysics(deltaTime);
 
-    // Sprawdź kolizję z kluczami
-    bool anyKeyCollected = false;
-
     for (auto& key : keys) {
         if (!key.IsCollected() &&
             glm::distance(camera.GetPosition(), key.GetPosition()) < 1.2f) {
             key.Collect();
-            anyKeyCollected = true;
-            // Tutaj możesz dodać efekt graficzny / dźwięk
         }
     }
 
-    for (auto& door : doors) {
-        door.Update(deltaTime, camera.GetPosition(), keyCollected);
+    // Sprawdź, czy wszystkie klucze zostały zebrane
+    if (!allKeysCollected) {
+        allKeysCollected = true;
+        for (const auto& key : keys) {
+            if (!key.IsCollected()) {
+                allKeysCollected = false;
+                break;
+            }
+        }
     }
-
-    // Jednorazowo usuń kolizje po zebraniu klucza
-    if (anyKeyCollected) {
+    if (allKeysCollected) {
         for (auto& door : doors) {
             door.RemoveCollidersFrom(maze);
         }
-        keyCollected = true;
     }
+    for (auto& door : doors) {
+        door.Update(deltaTime, camera.GetPosition(), allKeysCollected);
+    }
+
     camera.UpdatePhysics(deltaTime);
     ui.Update(deltaTime, camera.IsMoving(), !camera.IsJumping());
     camera.UpdatePrevPosition();

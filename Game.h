@@ -23,7 +23,7 @@ public:
     void Render();
     void Cleanup();
     bool ShouldClose();
-    bool keyCollected = false;
+    bool allKeysCollected = false;
     bool opened = false;
 
 private:
