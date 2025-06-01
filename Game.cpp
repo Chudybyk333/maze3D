@@ -14,6 +14,7 @@
 #include <fstream>
 #include "Skybox.h"
 #include "Ground.h"
+#include <vector>
 
 GLFWwindow* window;
 Camera camera;
@@ -81,13 +82,17 @@ void Game::Init() {
         keys.push_back(key);
     }
     // Inicjalizacja drzwi
-    for (const auto& pos : maze.GetDoorPositions()) {
-        Door door;
-        door.LoadModel();
-        door.SetPosition(pos);
-        doors.push_back(door);
-    }
+    const auto& leftPositions = maze.GetLeftDoorPositions();
+    const auto& rightPositions = maze.GetRightDoorPositions();
+    // Upewnij się, że rozmiary się zgadzają
+    size_t pairCount = std::min(leftPositions.size(), rightPositions.size());
 
+    for (size_t i = 0; i < pairCount; ++i) {
+        DoorPair pair;
+        pair.Init(leftPositions[i], rightPositions[i]);
+        pair.LoadModel();
+        doorPairs.push_back(pair);
+    }
 
     // Inicjalizacja shaderów UI
     uiShader = new Shader("ui.vert", "ui.frag");
@@ -132,19 +137,28 @@ void Game::Update() {
     camera.UpdatePhysics(deltaTime);
 
     // Sprawdź kolizję z kluczami
+    bool anyKeyCollected = false;
+
     for (auto& key : keys) {
         if (!key.IsCollected() &&
-            glm::distance(camera.GetPosition(), key.GetPosition()) < 0.5f) {
+            glm::distance(camera.GetPosition(), key.GetPosition()) < 1.2f) {
             key.Collect();
-            // Tutaj możesz dodać efekt zebrania klucza
-             // Otwórz wszystkie drzwi — na razie prosto:
-            for (auto& door : doors) {
-                door.Open();
-                maze.RemoveDoorColliderAt(door.GetPosition());
-            }
+            anyKeyCollected = true;
+            // Tutaj możesz dodać efekt graficzny / dźwięk
         }
     }
 
+    for (auto& pair : doorPairs) {
+        pair.Update(deltaTime, camera.GetPosition(), keyCollected);
+    }
+
+    // Jednorazowo usuń kolizje po zebraniu klucza
+    if (anyKeyCollected) {
+        for (auto& pair : doorPairs)
+            pair.RemoveCollidersFrom(maze);
+        keyCollected = true; // dodaj pole w klasie Game, np. bool keyCollected = false;
+    }
+    camera.UpdatePhysics(deltaTime);
     ui.Update(deltaTime, camera.IsMoving(), !camera.IsJumping());
     camera.UpdatePrevPosition();
 }
@@ -200,8 +214,8 @@ void Game::Render() {
         key.Render(*shader, camera.GetViewMatrix(), camera.GetProjectionMatrix());
     }
     // Renderowanie drzwi
-    for (auto& door : doors) {
-        door.Render(*shader, camera.GetViewMatrix(), camera.GetProjectionMatrix());
+    for (auto& pair : doorPairs) {
+        pair.Render(*shader, camera.GetViewMatrix(), camera.GetProjectionMatrix());
     }
 
 
