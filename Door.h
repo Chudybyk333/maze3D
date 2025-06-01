@@ -1,22 +1,35 @@
 #pragma once
-
 #include <glm/glm.hpp>
 #include <vector>
-#include "shader.h"
+#include "Shader.h"
+#include "Portal.h"
+#include "Maze.h"
 
 class Door {
 public:
-    Door();
-    void LoadModel();
-    void Render(Shader& shader, const glm::mat4& view, const glm::mat4& projection);
-    void SetPosition(const glm::vec3& pos);
-    glm::vec3 GetPosition() const;
-    void Open();
-    bool IsOpened() const;
+	Door();
+	void Init(const glm::vec3& leftPos, const glm::vec3& rightPos);
+	void LoadModel();
+	void Update(float dt, const glm::vec3& playerPos, bool hasKey);
+	void Render(Shader& shader, const glm::mat4& view, const glm::mat4& proj);
+	void RenderPortal(Shader& shader, const glm::mat4& view, const glm::mat4& proj);
+	void RemoveCollidersFrom(Maze& maze);
 
+	const Portal& GetPortal() const;
 private:
-    unsigned int VAO, VBO, textureID;
-    std::vector<float> vertices;
-    glm::vec3 position;
-    bool opened;
+	glm::vec3 leftPosition, rightPosition;
+	float leftAngle, rightAngle;
+	float openSpeed;
+	float maxAngle;
+	float triggerDistance;
+	bool isOpening;
+	unsigned int VAO, VBO;
+	std::vector<float> vertices;
+	unsigned int textureID;
+
+	Portal portal;
+
+	void BuildGeometry();  // pomocnicza do LoadModel()
+	void RenderWing(Shader& shader, const glm::mat4& view, const glm::mat4& proj, const glm::vec3& basePos, float angle, bool isLeft);
+
 };

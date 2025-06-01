@@ -20,6 +20,10 @@ uniform float keyLightIntensity;
 uniform vec3 mazeSize;         // Rozmiar labiryntu (width, height, depth)
 uniform sampler2D wallMap;     // Tekstura okreœlaj¹ca gdzie s¹ œciany (0.0 = pusto, 1.0 = œciana)
 
+//uniformy portalu
+uniform vec3 portalPos;
+uniform float portalIntensity;
+
 // Funkcja sprawdza, czy miêdzy œwiat³em a fragmentem jest œciana
 float isLightBlocked(vec3 fragPos, vec3 lightPos) {
     vec3 rayDir = normalize(lightPos - fragPos);
@@ -65,13 +69,21 @@ void main() {
     
     // Oblicz œwiat³o klucza z uwzglêdnieniem przeszkód
     vec3 keyDiffuse = keyDiff * keyLightColor * keyLightIntensity * shadowFactor;
-    
+
+    // obliczenia swiatla dla portalu
+    vec3 portalDir = normalize(portalPos - FragPos);
+    float portalDot = max(dot(norm, portalDir), 0.0);
+    float portalDist = length(portalPos - FragPos);
+    float portalAttenuation = 1.0 / (1.0 + 0.2 * portalDist + 0.05 * portalDist * portalDist);
+    vec3 portalColor = vec3(0.2, 1.0, 0.6); // jasnozielone œwiat³o
+    vec3 portalDiffuse = portalColor * portalDot * portalAttenuation * portalIntensity;
+
     // T³umienie œwiat³a (attenuation)
     float distance = length(keyLightPos - FragPos);
     float attenuation = 1.0 / (1.0 + 0.09 * distance + 0.032 * (distance * distance));
     keyDiffuse *= attenuation;
     
     // Finalny kolor
-    vec3 result = (ambient + diffuse + keyDiffuse) * texColor.rgb;
+    vec3 result = (ambient + diffuse + keyDiffuse + portalDiffuse) * texColor.rgb;
     FragColor = vec4(result, texColor.a);
 }

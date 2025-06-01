@@ -8,6 +8,7 @@
 #include "Door.h"
 #include "DoorWing.h"
 #include "DoorPair.h"
+#include "Portal.h"
 
 // Forward declarations
 class Shader;
@@ -22,7 +23,8 @@ public:
     void Render();
     void Cleanup();
     bool ShouldClose();
-    bool keyCollected = false;
+    bool allKeysCollected = false;
+    bool opened = false;
 
 private:
     float deltaTime = 0.016f;
@@ -35,7 +37,8 @@ private:
     Shader* shader = nullptr;
     Shader* skyboxShader = nullptr;
     Shader* uiShader = nullptr;
+    Shader* portalShader = nullptr;
     Ground ground;
     std::vector<Key> keys;
-    std::vector<DoorPair> doorPairs;
+    std::vector<Door> doors;
 };
