@@ -6,6 +6,8 @@
 #include "Key.h"
 #include "Ground.h"
 #include "Door.h"
+#include "DoorWing.h"
+#include "DoorPair.h"
 
 // Forward declarations
 class Shader;
@@ -20,6 +22,7 @@ public:
     void Render();
     void Cleanup();
     bool ShouldClose();
+    bool keyCollected = false;
 
 private:
     float deltaTime = 0.016f;
@@ -34,5 +37,5 @@ private:
     Shader* uiShader = nullptr;
     Ground ground;
     std::vector<Key> keys;
-    std::vector<Door> doors;
+    std::vector<DoorPair> doorPairs;
 };

@@ -27,7 +27,10 @@ void Maze::LoadFromFile(const std::string& filename) {
                 keyPositions.emplace_back(x + 0.0f, 0.5f, z + 0.0f);
             }
             if (line[x] == 'D') {
-                doorPositions.emplace_back(x + 0.0f, 0.5f, z + 0.0f);
+                leftDoorPositions.emplace_back(x + 0.0f, 1.0f, z + 0.0f); // wysokość = 1.0f (środek drzwi)
+            }
+            if (line[x] == 'E') {
+                rightDoorPositions.emplace_back(x + 0.0f, 1.0f, z + 0.0f);
             }
         }
         z++;
@@ -39,8 +42,11 @@ void Maze::LoadFromFile(const std::string& filename) {
 const std::vector<glm::vec3>& Maze::GetKeyPositions() const {
     return keyPositions;
 }
-const std::vector<glm::vec3>& Maze::GetDoorPositions() const {
-    return doorPositions;
+const std::vector<glm::vec3>& Maze::GetLeftDoorPositions() const {
+    return leftDoorPositions;
+}
+const std::vector<glm::vec3>& Maze::GetRightDoorPositions() const {
+    return rightDoorPositions;
 }
 
 void Maze::SetupRender() {
@@ -56,80 +62,82 @@ void Maze::SetupRender() {
 
     for (int z = 0; z < height; ++z) {
         for (int x = 0; x < width; ++x) {
-            if (map[z][x] == 'D') {
+            if (map[z][x] == 'D' || map[z][x] == 'E') {
                 glm::vec3 min(x - 0.5f, 0.0f, z - 0.5f);
-                glm::vec3 max(x + 0.5f, 2.0f, z + 0.5f);
+                glm::vec3 max(x + 0.5f, 3.0f, z + 0.5f);
                 doorColliders.push_back({ min, max });
             }
             if (map[z][x] == '#') {
-                glm::vec3 pos(x, 0.0f, z);
-                // dodaj kolizję
-                glm::vec3 min(x - 0.5f, 0.0f, z - 0.5f);
-                glm::vec3 max(x + 0.5f, 2.0f, z + 0.5f);
-                colliders.push_back({ min, max });
+                for (int level = 0; level < 2; ++level) { // dodajemy dwie warstwy (0 i 1)
+                    glm::vec3 pos(x, level * 1.0f, z);
+                    // dodaj kolizję
+                    glm::vec3 min(x - 0.5f, 0.0f, z - 0.5f);
+                    glm::vec3 max(x + 0.5f, 3.0f, z + 0.5f);
+                    colliders.push_back({ min, max });
 
-                float cube[] = {
-                    // pozycje         // normalne       // tekstury
-                    // tył
-                    -0.5f, -0.5f, -0.5f,   0, 0, -1,    0.0f, 0.0f,
-                     0.5f, -0.5f, -0.5f,   0, 0, -1,    1.0f, 0.0f,
-                     0.5f,  0.5f, -0.5f,   0, 0, -1,    1.0f, 1.0f,
-                     0.5f,  0.5f, -0.5f,   0, 0, -1,    1.0f, 1.0f,
-                    -0.5f,  0.5f, -0.5f,   0, 0, -1,    0.0f, 1.0f,
-                    -0.5f, -0.5f, -0.5f,   0, 0, -1,    0.0f, 0.0f,
+                    float cube[] = {
+                        // pozycje         // normalne       // tekstury
+                        // tył
+                        -0.5f, -0.5f, -0.5f,   0, 0, -1,    0.0f, 0.0f,
+                         0.5f, -0.5f, -0.5f,   0, 0, -1,    1.0f, 0.0f,
+                         0.5f,  0.5f, -0.5f,   0, 0, -1,    1.0f, 1.0f,
+                         0.5f,  0.5f, -0.5f,   0, 0, -1,    1.0f, 1.0f,
+                        -0.5f,  0.5f, -0.5f,   0, 0, -1,    0.0f, 1.0f,
+                        -0.5f, -0.5f, -0.5f,   0, 0, -1,    0.0f, 0.0f,
 
-                    // przód
-                    -0.5f, -0.5f,  0.5f,   0, 0, 1,    0.0f, 0.0f,
-                     0.5f, -0.5f,  0.5f,   0, 0, 1,    1.0f, 0.0f,
-                     0.5f,  0.5f,  0.5f,   0, 0, 1,    1.0f, 1.0f,
-                     0.5f,  0.5f,  0.5f,   0, 0, 1,    1.0f, 1.0f,
-                    -0.5f,  0.5f,  0.5f,   0, 0, 1,    0.0f, 1.0f,
-                    -0.5f, -0.5f,  0.5f,   0, 0, 1,    0.0f, 0.0f,
+                        // przód
+                        -0.5f, -0.5f,  0.5f,   0, 0, 1,    0.0f, 0.0f,
+                         0.5f, -0.5f,  0.5f,   0, 0, 1,    1.0f, 0.0f,
+                         0.5f,  0.5f,  0.5f,   0, 0, 1,    1.0f, 1.0f,
+                         0.5f,  0.5f,  0.5f,   0, 0, 1,    1.0f, 1.0f,
+                        -0.5f,  0.5f,  0.5f,   0, 0, 1,    0.0f, 1.0f,
+                        -0.5f, -0.5f,  0.5f,   0, 0, 1,    0.0f, 0.0f,
 
-                    // lewo
-                    -0.5f,  0.5f,  0.5f,  -1, 0, 0,    1.0f, 0.0f,
-                    -0.5f,  0.5f, -0.5f,  -1, 0, 0,    1.0f, 1.0f,
-                    -0.5f, -0.5f, -0.5f,  -1, 0, 0,    0.0f, 1.0f,
-                    -0.5f, -0.5f, -0.5f,  -1, 0, 0,    0.0f, 1.0f,
-                    -0.5f, -0.5f,  0.5f,  -1, 0, 0,    0.0f, 0.0f,
-                    -0.5f,  0.5f,  0.5f,  -1, 0, 0,    1.0f, 0.0f,
+                        // lewo
+                        -0.5f,  0.5f,  0.5f,  -1, 0, 0,    1.0f, 0.0f,
+                        -0.5f,  0.5f, -0.5f,  -1, 0, 0,    1.0f, 1.0f,
+                        -0.5f, -0.5f, -0.5f,  -1, 0, 0,    0.0f, 1.0f,
+                        -0.5f, -0.5f, -0.5f,  -1, 0, 0,    0.0f, 1.0f,
+                        -0.5f, -0.5f,  0.5f,  -1, 0, 0,    0.0f, 0.0f,
+                        -0.5f,  0.5f,  0.5f,  -1, 0, 0,    1.0f, 0.0f,
 
-                    // prawo
-                     0.5f,  0.5f,  0.5f,   1, 0, 0,    1.0f, 0.0f,
-                     0.5f,  0.5f, -0.5f,   1, 0, 0,    1.0f, 1.0f,
-                     0.5f, -0.5f, -0.5f,   1, 0, 0,    0.0f, 1.0f,
-                     0.5f, -0.5f, -0.5f,   1, 0, 0,    0.0f, 1.0f,
-                     0.5f, -0.5f,  0.5f,   1, 0, 0,    0.0f, 0.0f,
-                     0.5f,  0.5f,  0.5f,   1, 0, 0,    1.0f, 0.0f,
+                        // prawo
+                         0.5f,  0.5f,  0.5f,   1, 0, 0,    1.0f, 0.0f,
+                         0.5f,  0.5f, -0.5f,   1, 0, 0,    1.0f, 1.0f,
+                         0.5f, -0.5f, -0.5f,   1, 0, 0,    0.0f, 1.0f,
+                         0.5f, -0.5f, -0.5f,   1, 0, 0,    0.0f, 1.0f,
+                         0.5f, -0.5f,  0.5f,   1, 0, 0,    0.0f, 0.0f,
+                         0.5f,  0.5f,  0.5f,   1, 0, 0,    1.0f, 0.0f,
 
-                     // dół
-                     -0.5f, -0.5f, -0.5f,   0, -1, 0,    0.0f, 1.0f,
-                      0.5f, -0.5f, -0.5f,   0, -1, 0,    1.0f, 1.0f,
-                      0.5f, -0.5f,  0.5f,   0, -1, 0,    1.0f, 0.0f,
-                      0.5f, -0.5f,  0.5f,   0, -1, 0,    1.0f, 0.0f,
-                     -0.5f, -0.5f,  0.5f,   0, -1, 0,    0.0f, 0.0f,
-                     -0.5f, -0.5f, -0.5f,   0, -1, 0,    0.0f, 1.0f,
+                         // dół
+                         -0.5f, -0.5f, -0.5f,   0, -1, 0,    0.0f, 1.0f,
+                          0.5f, -0.5f, -0.5f,   0, -1, 0,    1.0f, 1.0f,
+                          0.5f, -0.5f,  0.5f,   0, -1, 0,    1.0f, 0.0f,
+                          0.5f, -0.5f,  0.5f,   0, -1, 0,    1.0f, 0.0f,
+                         -0.5f, -0.5f,  0.5f,   0, -1, 0,    0.0f, 0.0f,
+                         -0.5f, -0.5f, -0.5f,   0, -1, 0,    0.0f, 1.0f,
 
-                     // góra
-                     -0.5f,  0.5f, -0.5f,   0, 1, 0,    0.0f, 1.0f,
-                      0.5f,  0.5f, -0.5f,   0, 1, 0,    1.0f, 1.0f,
-                      0.5f,  0.5f,  0.5f,   0, 1, 0,    1.0f, 0.0f,
-                      0.5f,  0.5f,  0.5f,   0, 1, 0,    1.0f, 0.0f,
-                     -0.5f,  0.5f,  0.5f,   0, 1, 0,    0.0f, 0.0f,
-                     -0.5f,  0.5f, -0.5f,   0, 1, 0,    0.0f, 1.0f,
-                };
+                         // góra
+                         -0.5f,  0.5f, -0.5f,   0, 1, 0,    0.0f, 1.0f,
+                          0.5f,  0.5f, -0.5f,   0, 1, 0,    1.0f, 1.0f,
+                          0.5f,  0.5f,  0.5f,   0, 1, 0,    1.0f, 0.0f,
+                          0.5f,  0.5f,  0.5f,   0, 1, 0,    1.0f, 0.0f,
+                         -0.5f,  0.5f,  0.5f,   0, 1, 0,    0.0f, 0.0f,
+                         -0.5f,  0.5f, -0.5f,   0, 1, 0,    0.0f, 1.0f,
+                    };
 
-                // przesunięcie wszystkich wierzchołków
-                for (int i = 0; i < 36; ++i) {
-                    int idx = i * 8;
-                    vertices.push_back(cube[idx + 0] + pos.x);
-                    vertices.push_back(cube[idx + 1] + pos.y + 0.5f);
-                    vertices.push_back(cube[idx + 2] + pos.z);
-                    vertices.push_back(cube[idx + 3]);
-                    vertices.push_back(cube[idx + 4]);
-                    vertices.push_back(cube[idx + 5]);
-                    vertices.push_back(cube[idx + 6]);
-                    vertices.push_back(cube[idx + 7]);
+                    // przesunięcie wszystkich wierzchołków
+                    for (int i = 0; i < 36; ++i) {
+                        int idx = i * 8;
+                        vertices.push_back(cube[idx + 0] + pos.x);
+                        vertices.push_back(cube[idx + 1] + pos.y + 0.5f);
+                        vertices.push_back(cube[idx + 2] + pos.z);
+                        vertices.push_back(cube[idx + 3]);
+                        vertices.push_back(cube[idx + 4]);
+                        vertices.push_back(cube[idx + 5]);
+                        vertices.push_back(cube[idx + 6]);
+                        vertices.push_back(cube[idx + 7]);
+                    }
                 }
             }
         }
@@ -177,7 +185,7 @@ void Maze::RemoveDoorColliderAt(const glm::vec3& position) {
         std::remove_if(doorColliders.begin(), doorColliders.end(),
             [&](const AABB& aabb) {
                 glm::vec3 center = (aabb.min + aabb.max) * 0.5f;
-                return glm::distance(center, position) < 0.1f;
+                return glm::distance(glm::vec2(center.x, center.z), glm::vec2(position.x, position.z)) < 0.1f;
             }),
         doorColliders.end()
     );
