@@ -12,10 +12,10 @@ public:
     glm::vec3 GetPosition() const;
     bool IsCollected() const;
     void Collect();
+    float GetLightIntensity() const;
 
     // Dodane w³aœciwoœci œwiat³a
     glm::vec3 GetLightColor() const { return lightColor; }
-    float GetLightIntensity() const { return lightIntensity; }
 
 private:
     unsigned int VAO, VBO;

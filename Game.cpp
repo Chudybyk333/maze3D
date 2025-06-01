@@ -22,6 +22,8 @@ Maze maze;
 Shader* shader;
 UI ui;
 Shader* uiShader;
+Shader* portalShader;
+Portal portal;
 
 void framebuffer_size_callback(GLFWwindow*, int, int);
 void mouse_callback(GLFWwindow*, double, double);
@@ -88,11 +90,13 @@ void Game::Init() {
     size_t pairCount = std::min(leftPositions.size(), rightPositions.size());
 
     for (size_t i = 0; i < pairCount; ++i) {
-        DoorPair pair;
-        pair.Init(leftPositions[i], rightPositions[i]);
-        pair.LoadModel();
-        doorPairs.push_back(pair);
+        Door door;
+        door.Init(leftPositions[i], rightPositions[i]);
+        door.LoadModel();
+        doors.push_back(door);
     }
+    portalShader = new Shader("portal.vert", "portal.frag");
+
 
     // Inicjalizacja shaderów UI
     uiShader = new Shader("ui.vert", "ui.frag");
@@ -148,15 +152,16 @@ void Game::Update() {
         }
     }
 
-    for (auto& pair : doorPairs) {
-        pair.Update(deltaTime, camera.GetPosition(), keyCollected);
+    for (auto& door : doors) {
+        door.Update(deltaTime, camera.GetPosition(), keyCollected);
     }
 
     // Jednorazowo usuń kolizje po zebraniu klucza
     if (anyKeyCollected) {
-        for (auto& pair : doorPairs)
-            pair.RemoveCollidersFrom(maze);
-        keyCollected = true; // dodaj pole w klasie Game, np. bool keyCollected = false;
+        for (auto& door : doors) {
+            door.RemoveCollidersFrom(maze);
+        }
+        keyCollected = true;
     }
     camera.UpdatePhysics(deltaTime);
     ui.Update(deltaTime, camera.IsMoving(), !camera.IsJumping());
@@ -184,6 +189,16 @@ void Game::Render() {
     shader->setVec3("viewPos", camera.GetPosition());
     shader->setFloat("ambientStrength", ambientStrength);
 
+    //portal swiatlo parametry
+    for (const auto& door : doors) {
+        const Portal& portal = door.GetPortal();
+        if (portal.IsVisible()) {
+            shader->setVec3("portalPos", portal.GetPosition());
+            shader->setFloat("portalIntensity", portal.GetIntensity());
+            break; // Użyjemy tylko pierwszego widocznego portalu
+        }
+    }
+
     // Przekaż rozmiar labiryntu i teksturę ścian
     shader->setVec3("mazeSize", glm::vec3(maze.GetWidth(), 2.0f, maze.GetHeight()));
     glActiveTexture(GL_TEXTURE1); // Użyj slotu tekstury 1 (0 jest zajęty przez texture_diffuse1)
@@ -210,12 +225,19 @@ void Game::Render() {
 
 
     // Renderowanie kluczy
+    // domyślnie brak światła
+    shader->setFloat("keyLightIntensity", 0.0f);
+
     for (auto& key : keys) {
         key.Render(*shader, camera.GetViewMatrix(), camera.GetProjectionMatrix());
+        // Jeśli Render się wykona, to ustawi światło (nadpisze 0.0f)
     }
     // Renderowanie drzwi
-    for (auto& pair : doorPairs) {
-        pair.Render(*shader, camera.GetViewMatrix(), camera.GetProjectionMatrix());
+    for (auto& door : doors) {
+        door.Render(*shader, camera.GetViewMatrix(), camera.GetProjectionMatrix());
+    }
+    for (auto& door : doors) {
+        door.RenderPortal(*portalShader, camera.GetViewMatrix(), camera.GetProjectionMatrix());
     }
 
 
