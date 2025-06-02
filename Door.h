@@ -14,6 +14,8 @@ public:
 	void Render(Shader& shader, const glm::mat4& view, const glm::mat4& proj);
 	void RenderPortal(Shader& shader, const glm::mat4& view, const glm::mat4& proj);
 	void RemoveCollidersFrom(Maze& maze);
+	bool IsOpen() { return isOpening; };
+
 
 	const Portal& GetPortal() const;
 private:
