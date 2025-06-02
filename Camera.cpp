@@ -2,13 +2,13 @@
 
 Camera::Camera()
     : Front(0.0f, 0.0f, -1.0f), Speed(0.7f), Sensitivity(0.1f),
-    firstMouse(true), lastX(400), lastY(300), verticalVelocity(0.0f) { // Initialize verticalVelocity
-    Position = glm::vec3(12.0f, groundHeight, 12.0f); // ok. „wzrost gracza”
+    firstMouse(true), lastX(400), lastY(300), verticalVelocity(0.0f) {
+    Position = glm::vec3(12.0f, groundHeight, 12.0f);
     prevPosition = Position;
     Up = glm::vec3(0.0f, 1.0f, 0.0f);
     Yaw = -90.0f;
     Pitch = 0.0f;
-	Fov = 80.0f; // standardowy FOV
+	Fov = 80.0f;
     sprintFov = 90.0f;   
     currentFov = 80.0f;   
     fovChangeSpeed = 0.05f;
@@ -17,8 +17,8 @@ Camera::Camera()
 
 bool Camera::IsMoving() const {
     glm::vec3 diff = Position - prevPosition;
-    diff.y = 0.0f; // pomijamy ruch w pionie
-    return glm::length(diff) > 0.001f; // próg detekcji ruchu
+    diff.y = 0.0f;
+    return glm::length(diff) > 0.001f;
 }
 
 void Camera::UpdatePrevPosition() {
@@ -27,7 +27,7 @@ void Camera::UpdatePrevPosition() {
 
 
 bool Camera::CheckCollision(const glm::vec3& newPos, float radius) const {
-    if (!maze) return false;  // brak labiryntu = brak kolizji
+    if (!maze) return false;
 
     for (const auto& box : maze->GetColliders()) {
         glm::vec3 clamped = glm::clamp(newPos, box.min, box.max);
@@ -141,7 +141,6 @@ void Camera::OnMouseMove(GLFWwindow* window, double xpos, double ypos) {
     const double centerX = width / 2.0;
     const double centerY = height / 2.0;
 
-    // Jeśli to pierwszy ruch myszy, ustaw kursory na środek
     if (firstMouse) {
         lastX = centerX;
         lastY = centerY;

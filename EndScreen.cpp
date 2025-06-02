@@ -16,14 +16,13 @@ void EndScreen::Init(unsigned int textureID, Shader* shader) {
 
 void EndScreen::SetupQuad() {
     float vertices[] = {
-        // pos    // tex
-        0.0f, 1.0f, 0.0f, 1.0f,  // top-left
-        1.0f, 0.0f, 1.0f, 0.0f,  // bottom-right
-        0.0f, 0.0f, 0.0f, 0.0f,  // bottom-left
+        0.0f, 1.0f, 0.0f, 1.0f,
+        1.0f, 0.0f, 1.0f, 0.0f,
+        0.0f, 0.0f, 0.0f, 0.0f,
 
-        0.0f, 1.0f, 0.0f, 1.0f,  // top-left
-        1.0f, 1.0f, 1.0f, 1.0f,  // top-right
-        1.0f, 0.0f, 1.0f, 0.0f   // bottom-right
+        0.0f, 1.0f, 0.0f, 1.0f,
+        1.0f, 1.0f, 1.0f, 1.0f,
+        1.0f, 0.0f, 1.0f, 0.0f
     };
 
     glGenVertexArrays(1, &quadVAO);
@@ -34,11 +33,9 @@ void EndScreen::SetupQuad() {
     glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    // position attribute
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
-    // texture coord attribute
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
     glEnableVertexAttribArray(1);
 
@@ -48,7 +45,6 @@ void EndScreen::SetupQuad() {
 void EndScreen::Show() {
     if (!shader) return;
 
-    // Włącz blending alfa
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -60,9 +56,8 @@ void EndScreen::Show() {
     glBindTexture(GL_TEXTURE_2D, texture);
     shader->setInt("screenTexture", 0);
 
-    // Ustaw uniform rect na fullscreen (0,0 do 1,1)
     shader->setVec4("rect", glm::vec4(0.0f, 0.0f, 1.0f, 1.0f));
-    shader->setBool("selected", false); // Jeśli shader wymaga (z Twojego UI kodu)
+    shader->setBool("selected", false);
 
     glDrawArrays(GL_TRIANGLES, 0, 6);
 

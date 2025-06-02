@@ -6,9 +6,9 @@ void DoorPair::Init(const glm::vec3& leftPos, const glm::vec3& rightPos) {
 	left.SetPosition(leftPos);
 	right.SetPosition(rightPos);
 	glm::vec3 center = (leftPos + rightPos) * 0.5f;
-	glm::vec3 backDir = glm::vec3(0.0f, 0.0f, 0.8f); // jeœli drzwi s¹ zwrócone na pó³noc (Z–)
+	glm::vec3 backDir = glm::vec3(0.0f, 0.0f, 0.8f);
 
-	glm::vec3 portalPos = center + backDir * 0.6f; // odsuñ za drzwi
+	glm::vec3 portalPos = center + backDir * 0.6f;
 	portal.SetPosition(portalPos);
 	portal.Load();
 }
