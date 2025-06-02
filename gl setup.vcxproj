@@ -161,6 +161,7 @@
     <ClInclude Include="Door.h" />
     <ClInclude Include="EBO.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="EndScreen.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="Key.h" />
