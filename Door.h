@@ -31,7 +31,7 @@ private:
 
 	Portal portal;
 
-	void BuildGeometry();  // pomocnicza do LoadModel()
+	void BuildGeometry();
 	void RenderWing(Shader& shader, const glm::mat4& view, const glm::mat4& proj, const glm::vec3& basePos, float angle, bool isLeft);
 
 };
