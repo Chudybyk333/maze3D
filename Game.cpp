@@ -8,6 +8,7 @@
 #include "maze.h"
 #include "camera.h"
 #include "Shader.h"
+#include "EndScreen.h"
 #include "ui.h"
 #include <stb/stb_image.h>
 #include <iostream>
@@ -22,8 +23,11 @@ Maze maze;
 Shader* shader;
 UI ui;
 Shader* uiShader;
+Shader* endShader;
 Shader* portalShader;
 Portal portal;
+Door door;
+EndScreen endScreen;
 
 void framebuffer_size_callback(GLFWwindow*, int, int);
 void mouse_callback(GLFWwindow*, double, double);
@@ -106,6 +110,9 @@ void Game::Init() {
     uiShader = new Shader("ui.vert", "ui.frag");
     ui.Init(uiShader);
 
+    // Inicjalizacja shaderów endscreen
+    endShader = new Shader("ui.vert", "ui.frag");
+
     // Wczytanie tekstur
     unsigned int handTex = LoadTexture("hand.png");
     ui.SetHandTexture(handTex);
@@ -130,6 +137,15 @@ void Game::Init() {
     lightDirection = glm::vec3(-0.2f, -1.0f, -0.3f);
     lightColor = glm::vec3(1.0f, 1.0f, 1.0f);
     ambientStrength = 0.5f;
+
+    //czas
+    startTime = glfwGetTime();
+
+
+    //End screen
+    unsigned endTexture = LoadTexture("end_screen.png");
+    endScreen.Init(endTexture,endShader);
+
 }
 
 bool Game::ShouldClose() {
@@ -141,8 +157,13 @@ void Game::ProcessInput() {
 }
 
 void Game::Update() {
-    camera.Update();
-    camera.UpdatePhysics(deltaTime);
+    if (!gameFinished) {
+        camera.Update();
+        camera.UpdatePhysics(deltaTime);
+    }
+    else {
+        camera.UpdatePrevPosition(); // by uniknąć teleportacji
+    }
 
     for (auto& key : keys) {
         if (!key.IsCollected() &&
@@ -170,12 +191,29 @@ void Game::Update() {
         door.Update(deltaTime, camera.GetPosition(), allKeysCollected);
     }
 
+    if (!gameFinished && allKeysCollected && glm::distance(camera.GetPosition(), door.GetPortal().GetPosition()) < 1.6f) {
+        endTime = glfwGetTime();
+        gameFinished = true;
+        std::cout << "Game finished";
+
+    }
+
     camera.UpdatePhysics(deltaTime);
     ui.Update(deltaTime, camera.IsMoving(), !camera.IsJumping());
     camera.UpdatePrevPosition();
+
 }
 
 void Game::Render() {
+    if (gameFinished) {
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+        return;
+    }
+
+
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -255,6 +293,7 @@ void Game::Render() {
 
     // Renderowanie UI
     ui.Render();
+
 
     // Sprawdź błędy OpenGL
     GLenum err;
