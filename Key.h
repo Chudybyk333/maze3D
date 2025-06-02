@@ -13,8 +13,6 @@ public:
     bool IsCollected() const;
     void Collect();
     float GetLightIntensity() const;
-
-    // Dodane w³aœciwoœci œwiat³a
     glm::vec3 GetLightColor() const { return lightColor; }
 
 private:
@@ -23,8 +21,6 @@ private:
     glm::vec3 position;
     bool collected;
     std::vector<float> vertices;
-
-    // W³aœciwoœci œwiat³a klucza
     glm::vec3 lightColor = glm::vec3(1.0f, 0.8f, 0.2f); // Z³oty kolor
     float lightIntensity = 1.5f;
 };

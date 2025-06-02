@@ -18,7 +18,7 @@ public:
     const std::vector<AABB>& GetColliders() const;
     std::vector<AABB> doorColliders;
     const std::vector<AABB>& GetDoorColliders() const;
-    void RemoveDoorColliderAt(const glm::vec3& position); // do późniejszego usuwania kolizji po otwarciu
+    void RemoveDoorColliderAt(const glm::vec3& position);
     const std::vector<glm::vec3>& GetKeyPositions() const;
     const std::vector<glm::vec3>& GetLeftDoorPositions() const;
     const std::vector<glm::vec3>& GetRightDoorPositions() const;

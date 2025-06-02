@@ -28,8 +28,7 @@ public:
 private:
     glm::vec3 Position, Front, Up;
     glm::vec3 prevPosition;
-    
-    // Widok
+
     float Yaw, Pitch, Speed, Sensitivity;
     float Fov, sprintFov, currentFov, fovChangeSpeed;
 
@@ -37,8 +36,6 @@ private:
     float lastX, lastY;
     float verticalVelocity;
     bool isGrounded = true;
-
-	// Parametry fizyki
     const float groundHeight = 1.5f; 
     const float gravity = -3.0f;
     const float jumpForce = 2.5f;

@@ -14,5 +14,5 @@ public:
     void setBool(const std::string& name, bool value);
     void setInt(const std::string& name, int value);
     void setFloat(const std::string& name, float value);
-    bool isCompiled() const; // Add this method
+    bool isCompiled() const;
 };

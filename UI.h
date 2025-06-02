@@ -7,7 +7,7 @@
 class Shader;
 
 struct Item {
-    unsigned int textureID;  // ID tekstury OpenGL
+    unsigned int textureID;
     std::string name;
 };
 
