@@ -140,6 +140,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Door.cpp" />
+    <ClCompile Include="DoorPair.cpp" />
+    <ClCompile Include="DoorWing.cpp" />
+    <ClCompile Include="EndScreen.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="Ground.cpp" />
@@ -159,6 +162,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Door.h" />
+    <ClInclude Include="DoorPair.h" />
+    <ClInclude Include="DoorWing.h" />
     <ClInclude Include="EBO.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="EndScreen.h" />
@@ -175,6 +180,10 @@
     <ClInclude Include="Shader.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="endscreen.frag" />
+    <None Include="endscreen.vert" />
+    <None Include="portal.frag" />
+    <None Include="portal.vert" />
     <None Include="shader.frag" />
     <None Include="shader.vert" />
     <None Include="skybox.frag" />
@@ -187,11 +196,14 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="dol.png" />
+    <Image Include="door.png" />
+    <Image Include="end_screen.png" />
     <Image Include="ground_texture.png" />
     <Image Include="gora.png" />
     <Image Include="hand.png" />
     <Image Include="key_texture.png" />
     <Image Include="lewo.png" />
+    <Image Include="portal.png" />
     <Image Include="prawo.png" />
     <Image Include="przod.png" />
     <Image Include="tyl.png" />
