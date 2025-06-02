@@ -11,7 +11,7 @@ void Door::Init(const glm::vec3& leftPos, const glm::vec3& rightPos) {
 	leftPosition = leftPos;
 	rightPosition = rightPos;
 	glm::vec3 center = (leftPos + rightPos) * 0.5f;
-	portal.SetPosition(center + glm::vec3(0, 0, 0.6f));
+	portal.SetPosition(center + glm::vec3(0, 0, 0.5f));
 	portal.Load();
 }
 
@@ -118,6 +118,11 @@ void Door::RenderWing(Shader& shader, const glm::mat4& view, const glm::mat4& pr
     glm::mat4 model = glm::translate(glm::mat4(1.0f), basePos + pivotOffset);
     model = glm::rotate(model, glm::radians(angle), glm::vec3(0, 1, 0));
     model = glm::translate(model, -pivotOffset);
+
+    // Lustrzane odbicie prawego skrzyd³a
+    if (!isLeft) {
+        model = glm::scale(model, glm::vec3(-1.0f, 1.0f, 1.0f));
+    }
 
     shader.setMat4("model", model);
     glDrawArrays(GL_TRIANGLES, 0, vertices.size() / 8);
