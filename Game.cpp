@@ -49,11 +49,11 @@ void Game::Init() {
 
 
 
-    // Pobierz monitor
+    // Pobranie monitora
     GLFWmonitor* monitor = glfwGetPrimaryMonitor();
     const GLFWvidmode* mode = glfwGetVideoMode(monitor);
 
-    // Ustaw rozdzielczość okna na rozdzielczość monitora
+    // Ustawienie rozdzielczości okna na rozdzielczość monitora
     window = glfwCreateWindow(mode->width, mode->height, "Labirynt", monitor, NULL);
     if (window == NULL) {
         std::cerr << "Nie udało się stworzyć okna!" << std::endl;
@@ -94,7 +94,6 @@ void Game::Init() {
     // Inicjalizacja drzwi
     const auto& leftPositions = maze.GetLeftDoorPositions();
     const auto& rightPositions = maze.GetRightDoorPositions();
-    // Upewnij się, że rozmiary się zgadzają
     size_t pairCount = std::min(leftPositions.size(), rightPositions.size());
 
     for (size_t i = 0; i < pairCount; ++i) {
@@ -118,10 +117,10 @@ void Game::Init() {
 
     stbi_set_flip_vertically_on_load(true);
 
-    // Initialize the skybox shader
+    // Inicjalizacja skybox shader
     skyboxShader = new Shader("skybox.vert", "skybox.frag");
 
-    // Load the skybox
+    // Załadowanie skyboxa
     skybox = new Skybox();
     std::vector<std::string> faces = {
         "prawo.png", "lewo.png", "dol.png",
@@ -171,7 +170,7 @@ void Game::Update() {
         }
     }
 
-    // Sprawdź, czy wszystkie klucze zostały zebrane
+    // Sprawdzenie czy klucze zostały zebrane
     if (!allKeysCollected) {
         allKeysCollected = true;
         for (const auto& key : keys) {
@@ -216,7 +215,7 @@ void Game::Render() {
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    // Sprawdź czy shadery są poprawne
+    // Sprawdzenie czy shadery są poprawne
     if (!shader->isCompiled() || !skyboxShader->isCompiled()) {
         std::cerr << "Błąd shadera!" << std::endl;
         return;
@@ -243,7 +242,7 @@ void Game::Render() {
         }
     }
 
-    // Przekaż rozmiar labiryntu i teksturę ścian
+    // Przekazanie tekstury labiryntu i ścian
     shader->setVec3("mazeSize", glm::vec3(maze.GetWidth(), 2.0f, maze.GetHeight()));
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, wallTextureID);
@@ -269,7 +268,6 @@ void Game::Render() {
 
 
     // Renderowanie kluczy
-    // domyślnie brak światła
     shader->setFloat("keyLightIntensity", 0.0f);
 
     for (auto& key : keys) {
@@ -279,6 +277,7 @@ void Game::Render() {
     for (auto& door : doors) {
         door.Render(*shader, camera.GetViewMatrix(), camera.GetProjectionMatrix());
     }
+    // Renderowanie portalu
     for (auto& door : doors) {
         door.RenderPortal(*portalShader, camera.GetViewMatrix(), camera.GetProjectionMatrix());
     }
@@ -312,7 +311,7 @@ void Game::Cleanup() {
     glfwTerminate();
 }
 
-// --- Callbacki i input ---
+// Callbacki i input
 void framebuffer_size_callback(GLFWwindow*, int width, int height) {
     glViewport(0, 0, width, height);
 }

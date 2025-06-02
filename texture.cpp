@@ -21,7 +21,7 @@ unsigned int LoadTexture(const char* path) {
         glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
         glGenerateMipmap(GL_TEXTURE_2D);
 
-        // Domyœlne parametry tekstury (mog¹ byæ nadpisane póŸniej)
+        // Domyœlne parametry tekstury
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
@@ -39,7 +39,7 @@ unsigned int LoadTexture(const char* path) {
 
 unsigned int LoadCubemap(const std::vector<std::string>& faces) {
     unsigned int textureID;
-    glGenTextures(1, &textureID);  // Popraw literówkê: textureID zamiast textureID
+    glGenTextures(1, &textureID);
     glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
 
     int width, height, nrChannels;

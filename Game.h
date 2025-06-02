@@ -6,8 +6,6 @@
 #include "Key.h"
 #include "Ground.h"
 #include "Door.h"
-#include "DoorWing.h"
-#include "DoorPair.h"
 #include "Portal.h"
 
 // Forward declarations

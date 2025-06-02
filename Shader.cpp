@@ -61,7 +61,7 @@ void Shader::setFloat(const std::string& name, float value) {
 
 bool Shader::isCompiled() const {
     int success;
-    glGetProgramiv(ID, GL_LINK_STATUS, &success); // Check if the program was linked successfully
+    glGetProgramiv(ID, GL_LINK_STATUS, &success);
     if (!success) {
         char infoLog[512];
         glGetProgramInfoLog(ID, 512, NULL, infoLog);

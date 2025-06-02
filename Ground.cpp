@@ -8,7 +8,7 @@
 Ground::Ground() : groundVAO(0), groundVBO(0), textureID(0), vertexCount(0) {}
 
 void Ground::SetupRender(const Maze& maze) {
-    // Za³aduj teksturê pod³ogi
+    // £adowanie struktury pod³owgi
     textureID = LoadTexture("ground_texture.png");
 
     // Ustaw parametry tekstury dla tilingu
@@ -19,17 +19,17 @@ void Ground::SetupRender(const Maze& maze) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glBindTexture(GL_TEXTURE_2D, 0);
 
-    // Pobierz rozmiary labiryntu
+    // Pobranie rozmiaru labiryntu
     int mazeWidth = maze.GetWidth();
     int mazeHeight = maze.GetHeight();
 
-    // Oblicz rozmiar p³aszczyzny (z ma³ym marginesem)
+    // Oblicz rozmiar p³aszczyzny
     float startX = - 0.5f;
     float startZ = - 0.5f;
     float endX = mazeWidth - 0.5f;
     float endZ = mazeHeight - 0.5f;
 
-    // Okreœl jak czêsto tekstura ma siê powtarzaæ
+    // powtarzalnoœæ tekstury
     float texRepeatX = (endX - startX) / 1.0f;
     float texRepeatZ = (endZ - startZ) / 1.0f;
 

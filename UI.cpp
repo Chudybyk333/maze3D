@@ -17,13 +17,13 @@ void UI::Init(Shader* shader) {
 void UI::SetupQuad() {
     float vertices[] = {
         // pos      // tex
-        0.0f, 1.0f, 0.0f, 1.0f,  // top-left
-        1.0f, 0.0f, 1.0f, 0.0f,  // bottom-right
-        0.0f, 0.0f, 0.0f, 0.0f,  // bottom-left
+        0.0f, 1.0f, 0.0f, 1.0f,
+        1.0f, 0.0f, 1.0f, 0.0f,
+        0.0f, 0.0f, 0.0f, 0.0f,
 
-        0.0f, 1.0f, 0.0f, 1.0f,  // top-left
-        1.0f, 1.0f, 1.0f, 1.0f,  // top-right
-        1.0f, 0.0f, 1.0f, 0.0f   // bottom-right
+        0.0f, 1.0f, 0.0f, 1.0f,
+        1.0f, 1.0f, 1.0f, 1.0f,
+        1.0f, 0.0f, 1.0f, 0.0f
     };
     glGenVertexArrays(1, &quadVAO);
     glGenBuffers(1, &quadVBO);
@@ -57,10 +57,8 @@ void UI::RenderTexture(unsigned int texture, glm::vec2 position, glm::vec2 size,
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture);
 
-    // ustaw uniformy pozycji i rozmiaru (np. jako vec4: x, y, width, height)
     shader->setVec4("rect", glm::vec4(position, size));
 
-    // je?li slot jest zaznaczony, np. zmien kolor border
     shader->setBool("selected", selected);
 
     glDrawArrays(GL_TRIANGLES, 0, 6);
@@ -86,10 +84,6 @@ void UI::Render() {
         RenderTexture(handTexture, glm::vec2(0.7f, offsetY), glm::vec2(0.18f, 0.36f));
     }
 
-    // render inventory etc.
-
-
-    // Renderuj pasek ekwipunku normalnie
     if (inventory.size() > 0) {
         float slotWidth = 0.07f;
         float slotHeight = 0.07f;

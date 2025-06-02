@@ -27,7 +27,7 @@ void Maze::LoadFromFile(const std::string& filename) {
                 keyPositions.emplace_back(x + 0.0f, 0.5f, z + 0.0f);
             }
             if (line[x] == 'D') {
-                leftDoorPositions.emplace_back(x + 0.0f, 1.0f, z + 0.0f); // wysokość = 1.0f (środek drzwi)
+                leftDoorPositions.emplace_back(x + 0.0f, 1.0f, z + 0.0f);
             }
             if (line[x] == 'E') {
                 rightDoorPositions.emplace_back(x + 0.0f, 1.0f, z + 0.0f);
@@ -53,10 +53,9 @@ void Maze::SetupRender() {
     std::vector<float> vertices;
 
     // Załaduj teksturę
-    textureID = LoadTexture("wall_texture.png");  // Upewnij się, że masz plik wall_texture.png w odpowiednim miejscu
+    textureID = LoadTexture("wall_texture.png");
     if (textureID == 0) {
         std::cerr << "Failed to load wall texture!" << std::endl;
-        // Możesz tutaj stworzyć awaryjną teksturę
     }
 
 
@@ -68,12 +67,11 @@ void Maze::SetupRender() {
                 doorColliders.push_back({ min, max });
             }
             if (map[z][x] == '#') {
-                for (int level = 0; level < 2; ++level) { // dodajemy dwie warstwy (0 i 1)
+                for (int level = 0; level < 2; ++level) { // dwie kostki jedna sciana
                     glm::vec3 pos(x, level * 1.0f, z);
-                    // dodaj kolizję
                     glm::vec3 min(x - 0.5f, 0.0f, z - 0.5f);
                     glm::vec3 max(x + 0.5f, 3.0f, z + 0.5f);
-                    colliders.push_back({ min, max });
+                    colliders.push_back({ min, max }); // dodanie kolizji
 
                     float cube[] = {
                         // pozycje         // normalne       // tekstury
@@ -198,7 +196,6 @@ unsigned int Maze::GenerateWallTexture() {
     int texHeight = height;
     std::vector<float> wallData(texWidth * texHeight, 0.0f);
 
-    // Wypełnij teksturę (1.0 = ściana, 0.0 = pusto)
     for (int z = 0; z < height; ++z) {
         for (int x = 0; x < width; ++x) {
             if (map[z][x] == '#') {

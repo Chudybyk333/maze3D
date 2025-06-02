@@ -12,7 +12,7 @@ void Key::LoadModel() {
     // Prosta kostka jako model klucza
     float size = 0.3f;
     vertices = {
-        // Front face
+        // przód
         -size, -size,  size,  0.0f, 0.0f, 1.0f,  0.0f, 0.0f,
          size, -size,  size,  0.0f, 0.0f, 1.0f,  1.0f, 0.0f,
          size,  size,  size,  0.0f, 0.0f, 1.0f,  1.0f, 1.0f,
@@ -20,7 +20,7 @@ void Key::LoadModel() {
         -size,  size,  size,  0.0f, 0.0f, 1.0f,  0.0f, 1.0f,
         -size, -size,  size,  0.0f, 0.0f, 1.0f,  0.0f, 0.0f,
 
-        // Back face
+        // ty³
         -size, -size, -size,  0.0f, 0.0f, -1.0f,  0.0f, 0.0f,
          size, -size, -size,  0.0f, 0.0f, -1.0f,  1.0f, 0.0f,
          size,  size, -size,  0.0f, 0.0f, -1.0f,  1.0f, 1.0f,
@@ -28,7 +28,7 @@ void Key::LoadModel() {
         -size,  size, -size,  0.0f, 0.0f, -1.0f,  0.0f, 1.0f,
         -size, -size, -size,  0.0f, 0.0f, -1.0f,  0.0f, 0.0f,
 
-        // Left face
+        // llewo
         -size,  size,  size, -1.0f, 0.0f, 0.0f,  1.0f, 0.0f,
         -size,  size, -size, -1.0f, 0.0f, 0.0f,  1.0f, 1.0f,
         -size, -size, -size, -1.0f, 0.0f, 0.0f,  0.0f, 1.0f,
@@ -36,7 +36,7 @@ void Key::LoadModel() {
         -size, -size,  size, -1.0f, 0.0f, 0.0f,  0.0f, 0.0f,
         -size,  size,  size, -1.0f, 0.0f, 0.0f,  1.0f, 0.0f,
 
-        // Right face
+        // prawo
          size,  size,  size,  1.0f, 0.0f, 0.0f,  1.0f, 0.0f,
          size,  size, -size,  1.0f, 0.0f, 0.0f,  1.0f, 1.0f,
          size, -size, -size,  1.0f, 0.0f, 0.0f,  0.0f, 1.0f,
@@ -44,7 +44,7 @@ void Key::LoadModel() {
          size, -size,  size,  1.0f, 0.0f, 0.0f,  0.0f, 0.0f,
          size,  size,  size,  1.0f, 0.0f, 0.0f,  1.0f, 0.0f,
 
-         // Top face
+         // góra
          -size,  size, -size,  0.0f, 1.0f, 0.0f,  0.0f, 1.0f,
           size,  size, -size,  0.0f, 1.0f, 0.0f,  1.0f, 1.0f,
           size,  size,  size,  0.0f, 1.0f, 0.0f,  1.0f, 0.0f,
@@ -52,7 +52,7 @@ void Key::LoadModel() {
          -size,  size,  size,  0.0f, 1.0f, 0.0f,  0.0f, 0.0f,
          -size,  size, -size,  0.0f, 1.0f, 0.0f,  0.0f, 1.0f,
 
-         // Bottom face
+         // dó³
          -size, -size, -size,  0.0f, -1.0f, 0.0f,  0.0f, 1.0f,
           size, -size, -size,  0.0f, -1.0f, 0.0f,  1.0f, 1.0f,
           size, -size,  size,  0.0f, -1.0f, 0.0f,  1.0f, 0.0f,
@@ -83,7 +83,7 @@ void Key::LoadModel() {
 void Key::Render(Shader& shader, const glm::mat4& view, const glm::mat4& projection) {
     if (collected) return;
 
-    // Przeka¿ parametry œwiat³a klucza do shadera
+    // Parametry œwiat³a klucza do shadera
     shader.use();
     shader.setVec3("keyLightPos", position + glm::vec3(0.0f, 0.2f, 0.0f)); // Lekko nad kluczem
     shader.setVec3("keyLightColor", lightColor);

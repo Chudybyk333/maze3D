@@ -46,7 +46,7 @@ void Portal::Load() {
 
 	glBindVertexArray(0);
 
-	textureID = LoadTexture("portal.png");  // mo¿esz u¿yæ pustej lub œwiec¹cej tekstury
+	textureID = LoadTexture("portal.png");
 }
 
 void Portal::Update(float dt) {

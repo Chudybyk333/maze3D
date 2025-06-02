@@ -19,7 +19,7 @@ void Door::BuildGeometry() {
     float w = 1.0f, h = 2.0f, d = 0.2f;
     float hw = w / 2.0f, hh = h / 2.0f, hd = d / 2.0f;
     float cube[] = {
-        // back
+        // ty³
         -hw, -hh, -hd,  0, 0, -1,  0.0f, 0.0f,
          hw, -hh, -hd,  0, 0, -1,  1.0f, 0.0f,
          hw,  hh, -hd,  0, 0, -1,  1.0f, 1.0f,
@@ -27,7 +27,7 @@ void Door::BuildGeometry() {
         -hw,  hh, -hd,  0, 0, -1,  0.0f, 1.0f,
         -hw, -hh, -hd,  0, 0, -1,  0.0f, 0.0f,
 
-        // front
+        // przód
         -hw, -hh,  hd,  0, 0, 1,  0.0f, 0.0f,
          hw, -hh,  hd,  0, 0, 1,  1.0f, 0.0f,
          hw,  hh,  hd,  0, 0, 1,  1.0f, 1.0f,
@@ -35,7 +35,7 @@ void Door::BuildGeometry() {
         -hw,  hh,  hd,  0, 0, 1,  0.0f, 1.0f,
         -hw, -hh,  hd,  0, 0, 1,  0.0f, 0.0f,
 
-        // left
+        // lewo
         -hw,  hh,  hd, -1, 0, 0,  1.0f, 0.0f,
         -hw,  hh, -hd, -1, 0, 0,  1.0f, 1.0f,
         -hw, -hh, -hd, -1, 0, 0,  0.0f, 1.0f,
@@ -43,7 +43,7 @@ void Door::BuildGeometry() {
         -hw, -hh,  hd, -1, 0, 0,  0.0f, 0.0f,
         -hw,  hh,  hd, -1, 0, 0,  1.0f, 0.0f,
 
-        // right
+        // prawo
          hw,  hh,  hd,  1, 0, 0,  1.0f, 0.0f,
          hw,  hh, -hd,  1, 0, 0,  1.0f, 1.0f,
          hw, -hh, -hd,  1, 0, 0,  0.0f, 1.0f,
@@ -51,7 +51,7 @@ void Door::BuildGeometry() {
          hw, -hh,  hd,  1, 0, 0,  0.0f, 0.0f,
          hw,  hh,  hd,  1, 0, 0,  1.0f, 0.0f,
 
-         // bottom
+         // dó³
          -hw, -hh, -hd,  0, -1, 0,  0.0f, 1.0f,
           hw, -hh, -hd,  0, -1, 0,  1.0f, 1.0f,
           hw, -hh,  hd,  0, -1, 0,  1.0f, 0.0f,
@@ -59,7 +59,7 @@ void Door::BuildGeometry() {
          -hw, -hh,  hd,  0, -1, 0,  0.0f, 0.0f,
          -hw, -hh, -hd,  0, -1, 0,  0.0f, 1.0f,
 
-         // top
+         // góra
          -hw,  hh, -hd,  0, 1, 0,  0.0f, 1.0f,
           hw,  hh, -hd,  0, 1, 0,  1.0f, 1.0f,
           hw,  hh,  hd,  0, 1, 0,  1.0f, 0.0f,

@@ -106,7 +106,7 @@ void Camera::ProcessKeyboard(GLFWwindow* window) {
 
     bool altPressedNow = glfwGetKey(window, GLFW_KEY_LEFT_ALT) == GLFW_PRESS;
     if (altPressedNow && !altPressedLastFrame) {
-        flyMode = !flyMode;  // przełącz tryb latania
+        flyMode = !flyMode;  // god mode
     }
     altPressedLastFrame = altPressedNow;
 
