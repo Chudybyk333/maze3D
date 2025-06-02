@@ -27,6 +27,10 @@ public:
     bool opened = false;
 
 private:
+    float startTime = 0.0f;
+    float endTime = 0.0f;
+    bool gameFinished = false;
+
     float deltaTime = 0.016f;
     glm::vec3 lightDirection;
     glm::vec3 lightColor;
