@@ -161,7 +161,7 @@ void Game::Update() {
         camera.UpdatePhysics(deltaTime);
     }
     else {
-        camera.UpdatePrevPosition(); // by uniknąć teleportacji
+        camera.UpdatePrevPosition();
     }
 
     for (auto& key : keys) {
@@ -239,13 +239,13 @@ void Game::Render() {
         if (portal.IsVisible()) {
             shader->setVec3("portalPos", portal.GetPosition());
             shader->setFloat("portalIntensity", portal.GetIntensity());
-            break; // Użyjemy tylko pierwszego widocznego portalu
+            break;
         }
     }
 
     // Przekaż rozmiar labiryntu i teksturę ścian
     shader->setVec3("mazeSize", glm::vec3(maze.GetWidth(), 2.0f, maze.GetHeight()));
-    glActiveTexture(GL_TEXTURE1); // Użyj slotu tekstury 1 (0 jest zajęty przez texture_diffuse1)
+    glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, wallTextureID);
     shader->setInt("wallMap", 1);
 
@@ -274,7 +274,6 @@ void Game::Render() {
 
     for (auto& key : keys) {
         key.Render(*shader, camera.GetViewMatrix(), camera.GetProjectionMatrix());
-        // Jeśli Render się wykona, to ustawi światło (nadpisze 0.0f)
     }
     // Renderowanie drzwi
     for (auto& door : doors) {

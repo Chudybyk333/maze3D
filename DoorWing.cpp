@@ -17,10 +17,9 @@ void DoorWing::SetPosition(const glm::vec3& pos) {
 }
 
 void DoorWing::LoadModel() {
-    float w = 1.0f; // szerokoœæ
-    float h = 2.0f; // wysokoœæ
-    float d = 0.2f; // g³êbokoœæ
-    // Pozycje i UV dla prostopad³oœcianu
+    float w = 1.0f;
+    float h = 2.0f;
+    float d = 0.2f;
     float hw = w / 2.0f;
     float hh = h / 2.0f;
     float hd = d / 2.0f;
