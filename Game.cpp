@@ -54,7 +54,7 @@ void Game::Init() {
     const GLFWvidmode* mode = glfwGetVideoMode(monitor);
 
     // Ustaw rozdzielczość okna na rozdzielczość monitora
-    window = glfwCreateWindow(mode->width, mode->height, "Labirynt", monitor, NULL);
+    window = glfwCreateWindow(1280, 720, "Labirynt", NULL, NULL);
     if (window == NULL) {
         std::cerr << "Nie udało się stworzyć okna!" << std::endl;
         glfwTerminate();
