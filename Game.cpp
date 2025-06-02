@@ -98,7 +98,6 @@ void Game::Init() {
     size_t pairCount = std::min(leftPositions.size(), rightPositions.size());
 
     for (size_t i = 0; i < pairCount; ++i) {
-        Door door;
         door.Init(leftPositions[i], rightPositions[i]);
         door.LoadModel();
         doors.push_back(door);
