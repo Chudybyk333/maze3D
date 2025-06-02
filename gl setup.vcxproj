@@ -140,9 +140,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Door.cpp" />
-    <ClCompile Include="DoorPair.cpp" />
-    <ClCompile Include="DoorWing.cpp" />
-    <ClCompile Include="EndScreen.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="Ground.cpp" />
@@ -164,7 +161,6 @@
     <ClInclude Include="Door.h" />
     <ClInclude Include="EBO.h" />
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="EndScreen.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="Key.h" />
