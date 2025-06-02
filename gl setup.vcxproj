@@ -24,6 +24,7 @@
     <ProjectGuid>{99a3585e-b51a-4648-b040-dbe45d4403be}</ProjectGuid>
     <RootNamespace>glsetup</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>maze 3D</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

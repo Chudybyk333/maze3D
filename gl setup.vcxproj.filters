@@ -148,6 +148,18 @@
     <None Include="skybox.frag">
       <Filter>Pliki zasobów\Shadery</Filter>
     </None>
+    <None Include="endscreen.frag">
+      <Filter>Pliki zasobów\Shadery</Filter>
+    </None>
+    <None Include="endscreen.vert">
+      <Filter>Pliki zasobów\Shadery</Filter>
+    </None>
+    <None Include="portal.frag">
+      <Filter>Pliki zasobów\Shadery</Filter>
+    </None>
+    <None Include="portal.vert">
+      <Filter>Pliki zasobów\Shadery</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="maze.txt">
@@ -183,6 +195,15 @@
       <Filter>Pliki zasobów\Tekstury</Filter>
     </Image>
     <Image Include="key_texture.png">
+      <Filter>Pliki zasobów\Tekstury</Filter>
+    </Image>
+    <Image Include="door.png">
+      <Filter>Pliki zasobów\Tekstury</Filter>
+    </Image>
+    <Image Include="end_screen.png">
+      <Filter>Pliki zasobów\Tekstury</Filter>
+    </Image>
+    <Image Include="portal.png">
       <Filter>Pliki zasobów\Tekstury</Filter>
     </Image>
   </ItemGroup>

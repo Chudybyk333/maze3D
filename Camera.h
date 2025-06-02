@@ -37,8 +37,8 @@ private:
     float verticalVelocity;
     bool isGrounded = true;
     const float groundHeight = 1.5f; 
-    const float gravity = -3.0f;
-    const float jumpForce = 2.5f;
+    const float gravity = -9.81f;
+    const float jumpForce = 4.2f;
 
     float hitboxRadius = 0.15f;
     bool flyMode = false;
