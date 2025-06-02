@@ -40,8 +40,8 @@ private:
 
 	// Parametry fizyki
     const float groundHeight = 1.5f; 
-    const float gravity = -16.0f;
-    const float jumpForce = 4.5f;
+    const float gravity = -3.0f;
+    const float jumpForce = 2.5f;
 
     float hitboxRadius = 0.15f;
     bool flyMode = false;

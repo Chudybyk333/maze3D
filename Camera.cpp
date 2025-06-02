@@ -1,7 +1,7 @@
 ﻿#include "camera.h"
 
 Camera::Camera()
-    : Front(0.0f, 0.0f, -1.0f), Speed(1.0f), Sensitivity(0.1f),
+    : Front(0.0f, 0.0f, -1.0f), Speed(0.7f), Sensitivity(0.1f),
     firstMouse(true), lastX(400), lastY(300), verticalVelocity(0.0f) { // Initialize verticalVelocity
     Position = glm::vec3(12.0f, groundHeight, 12.0f); // ok. „wzrost gracza”
     prevPosition = Position;
@@ -11,7 +11,7 @@ Camera::Camera()
 	Fov = 80.0f; // standardowy FOV
     sprintFov = 90.0f;   
     currentFov = 80.0f;   
-    fovChangeSpeed = 10.0f;
+    fovChangeSpeed = 0.05f;
 }
 
 
