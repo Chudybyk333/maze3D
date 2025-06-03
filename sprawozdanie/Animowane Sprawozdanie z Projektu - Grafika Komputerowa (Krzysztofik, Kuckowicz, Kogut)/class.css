@@ -1,0 +1,11 @@
+/* ...existing code... */
+.c10{
+    background-color:#ffffff;
+    max-width:451.4pt;
+    padding:72pt 72pt 72pt 72pt;
+    margin: 40px auto;           /* Wyśrodkowanie całości */
+    display: flex;               /* Flexbox do wyśrodkowania */
+    flex-direction: column;
+    align-items: center;
+}
+/* ...existing code... */
